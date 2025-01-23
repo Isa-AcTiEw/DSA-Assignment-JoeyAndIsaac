@@ -25,7 +25,7 @@ int Movie::getKey() {
 }
 
 void Movie::displayInfo() {
-	cout << "movieId: " << " " << movieId << endl;
+	cout << "MovieId: " << " " << movieId << endl;
 	cout << "Movie Title:  " << " " << movieTitle << endl;
-	cout << "releasedYear: " << " " << releasedYear << endl;
+	cout << "Year of release: " << " " << releasedYear << endl;
 }

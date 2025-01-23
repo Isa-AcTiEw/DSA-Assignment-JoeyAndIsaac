@@ -4,8 +4,7 @@
 #include "AVLTree.h"
 #include <string>
 using namespace std;
-
-typedef string KeyType;
+typedef int hashKey;
 
 template <class T>
 class HashTable
@@ -20,10 +19,10 @@ public:
     HashTable();
 
     // Hash function to map key to an index
-    int hash(KeyType newKey);
+    int hash(hashKey newKey);
 
     // Add a new item to the hash table
-    bool add(KeyType newKey, T newItem);
+    bool add(hashKey newKey, T newItem);
 
     // Check if the hash table is empty
     bool isEmpty();

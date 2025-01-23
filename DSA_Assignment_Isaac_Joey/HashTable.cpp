@@ -1,5 +1,6 @@
 #include "HashTable.h"
 #include "AVLTree.h"
+#include <string>
 #include <cmath>
 template <class T>
 //HashTable constructor, intializes an array of MAX_SIZE with each AVLNode pointer in each index pointing to a nullptr 
@@ -19,14 +20,14 @@ HashTable<T>::HashTable() {
 // convert to ascii value each of the numbers then do a polynomial rolling hash 
 
 template <class T>
-int HashTable<T>::hash(KeyType key) {
+int HashTable<T>::hash(hashKey key) {
 	int sum = 0;
 	int base = 31;
 	string strKey = to_string(key);
 	int len = strKey.length;
 	for (int i = 0; i < len; i++) {
 		int digit = strKey[i] - '0';
-		if (digit != null) {
+		if (digit != NULL) {
 			sum += digit * pow(base, len - i);
 		}
 	}
@@ -36,7 +37,7 @@ int HashTable<T>::hash(KeyType key) {
 }
 
 template <class T>
-bool HashTable<T>::add(KeyType newKey, T item) {
+bool HashTable<T>::add(hashKey newKey, T item) {
 	// hash the key first 
 	int index = hash(newKey); // year of released or date of year for the actor 
 	// call the insert method pass in the item;

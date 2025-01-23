@@ -21,24 +21,23 @@ class AVLTree
 {
 private:
 
-    AVLNode* root;
+    AVLNode<T>* root;
 
 public:
 
     AVLTree(); // Constructor to initialize the tree
 
     // Function to get the height of a node
-    int height(AVLNode* node);
+    int height(AVLNode<T>* node);
 
     // Methods for performing right-rotate and left-rotate
-    AVLNode* rotateRight(AVLNode*& node);
-    AVLNode* rotateLeft(AVLNode*& node);
+    AVLNode<T>* rotateRight(AVLNode<T>*& node);
+    AVLNode<T>* rotateLeft(AVLNode<T>*& node);
 
     // Other necessary methods (e.g., insert, balance, etc.) could be added here
     void insert(T item);
-    void insertRecursive(AVLNode*& root,string key,T item);
-    void delete(KeyType key);
-    int getBalanceFactor(AVLNode* root); 
+    void insertRecursive(AVLNode<T>*& root,string key,T item);
+    int getBalanceFactor(AVLNode<T>* root); 
     void print();
     void print(AVLNode<T>* root);
 };

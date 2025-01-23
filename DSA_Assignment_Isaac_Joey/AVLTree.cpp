@@ -13,11 +13,12 @@ template <class T>
 
 void AVLTree<T>::insert(T item) {
 	// create the node here 
+	string key = item->getKey();
 	AVLNode* avlNode;
-	avlNode->key = item->getKey();
+	avlNode->key = key;
 	avlNode->item = item;
 	if (root == nullptr) {
-		root = avlNode
+		root = avlNode;
 	}
 	else {
 		// call the recursive function 
@@ -29,7 +30,7 @@ void AVLTree<T>::insert(T item) {
 template <class T>
 void AVLTree<T>::insertRecursive(AVLNode<T>*& root, string key, T item) {
 	// recursive base case if the root == nullptr 
-	AVLNode* newNode;
+	AVLNode<T>* newNode = new AVLNode<T>();
 	// base case the tree is automatically balanced at that node (left and right height is 0, height of node is 1)
 	if (root == nullptr) {
 
@@ -40,10 +41,10 @@ void AVLTree<T>::insertRecursive(AVLNode<T>*& root, string key, T item) {
 	else {
 		if (key < root->key) {
 			// update the left subtree pointer to the newNode that is inserted on the leftSubtree
-			root->left = insertRecursive(root->left, string key, T item);
+			root->left = insertRecursive(root->left,key,item);
 		}
 		else {
-			root->right = insertRecursive(root->right, string key, T item);
+			root->right = insertRecursive(root->right,key,item);
 		}
 	}
 
@@ -103,7 +104,7 @@ int AVLTree<T>::height(AVLNode<T>* root) {
 	if (root == nullptr) {
 		return 0;
 	}
-	int leftHeigt = height(root->left);
+	int leftHeight = height(root->left);
 	int rightHeight = height(root->right);
 	return 1 + max(leftHeight, rightHeight);
 }
@@ -114,7 +115,7 @@ int AVLTree<T>::getBalanceFactor(AVLNode<T>* root) {
 		return 0;
 	}
 	else {
-		return height(root->left) - height(root->right)
+		return height(root->left) - height(root->right);
 	}
 }
 
