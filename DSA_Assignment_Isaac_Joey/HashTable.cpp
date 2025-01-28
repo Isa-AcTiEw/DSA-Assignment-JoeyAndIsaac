@@ -2,6 +2,10 @@
 #include "AVLTree.h"
 #include <string>
 #include <cmath>
+#include "Actor.h";
+#include "Movie.h";
+template class HashTable<Actor>;
+template class HashTable<Movie>;
 template <class T>
 //HashTable constructor, intializes an array of MAX_SIZE with each AVLNode pointer in each index pointing to a nullptr 
 // Also sets the size of the HashTable to 0 since there are no new elements 
@@ -24,7 +28,7 @@ int HashTable<T>::hash(hashKey key) {
 	int sum = 0;
 	int base = 31;
 	string strKey = to_string(key);
-	int len = strKey.length;
+	int len = strKey.length();
 	for (int i = 0; i < len; i++) {
 		int digit = strKey[i] - '0';
 		if (digit != NULL) {
@@ -33,6 +37,7 @@ int HashTable<T>::hash(hashKey key) {
 	}
 	if (sum != 0) {
 		int hash = sum % 101;
+		return hash;
 	}
 }
 
@@ -42,8 +47,9 @@ bool HashTable<T>::add(hashKey newKey, T item) {
 	int index = hash(newKey); // year of released or date of year for the actor 
 	// call the insert method pass in the item;
 	AVLTree<T>* avlTree = items[index];
-	avlTree->insert(index);
+	avlTree->insert(item);
 	size++;
+	return true;
 }
 
 template <class T>
@@ -64,8 +70,22 @@ void HashTable<T>::print() {
 			AVLTree<T>* avlTree = items[i];
 			avlTree->print();
 		}
-		else {
-			return size;
+	}
+}
+
+template <class T>
+
+AVLNode<T>* HashTable<T>::search(int id) {
+	cout << "searching id: " << id << endl;
+	for (int i = 0; i < MAX_SIZE; i++) {
+		AVLTree<T>* avlTree = items[i];
+		if (avlTree->getRoot() != nullptr) {
+			AVLNode<T>* item = avlTree->searchAVLById(id);
+			
+			if (item != nullptr) {
+				return item;
+			}
 		}
 	}
+	return nullptr;
 }

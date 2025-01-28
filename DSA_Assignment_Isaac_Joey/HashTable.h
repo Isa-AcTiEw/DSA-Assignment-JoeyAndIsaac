@@ -30,6 +30,9 @@ public:
     // Get the number of elements in the hash table
     int getLength();
 
+    // Get the key (search in hashTable)
+    AVLNode<T>* search(int id);
+
     // Print the contents of the hash table
     void print();
 };

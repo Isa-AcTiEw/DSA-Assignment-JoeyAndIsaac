@@ -7,8 +7,8 @@ Actor::Actor(int aId, string aName, int bYear) {
 	actorName = aName;
 	birthYear = bYear;
 };
-string Actor::getKey() {
-	return actorName;
+int Actor::getKey() {
+	return actorId;
 };
 
 string Actor::getActorName() {

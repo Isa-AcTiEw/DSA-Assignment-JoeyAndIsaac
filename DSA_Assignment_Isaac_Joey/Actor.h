@@ -11,7 +11,7 @@ class Actor
 		Actor(); // default constructor 
 		Actor(int aId, string aName, int bYear);
 		// getters and setters for the classes 
-		string getKey();
+		int getKey();
 		string getActorName();
 		void setActorName(string aName);
 		void setActorBirthYear(int bYear);

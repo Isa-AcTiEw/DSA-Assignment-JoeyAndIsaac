@@ -10,11 +10,12 @@ class Vector
 	public:
 		Vector();
 		Vector(int s, int c);
-		bool pushBack(const T& item);
+		bool pushBack(T item);
 		bool deleteItem(T& item);
 		T& const operator[](int index) const; // allows retrieval by list indices (read-only access)
 		T& operator[](int index);
 		void resize(int newCapacity);
 		void print();
+		int getLength();
 };
 

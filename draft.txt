@@ -1,0 +1,36 @@
+ifstream actorFile("actors.csv");
+	ifstream movieFile("movies.csv");
+
+	if (!actorFile.is_open() || !movieFile.is_open()) {
+		cout << "Not open why" << endl;
+		cerr << "Could not open both files" << endl;
+	}
+	string line;
+	// skip headers in both files 
+	getline(actorFile, line);
+	getline(actorFile, line);
+
+	while (getline(actorFile, line) && getline(actorFile, line)) {
+		stringstream actorStream(line);
+		string id, name, birth;
+		getline(actorStream, id, ',');
+		getline(actorStream, name, ',');
+		getline(actorStream, birth, ',');
+		int actorId = stoi(id);
+		int actorBirthYear = stoi(birth);
+		// create a new actor object for each actor 
+		Actor actor(actorId, name, actorBirthYear);
+		actorHashTable->add(actorBirthYear, actor);
+
+		// Adding of movies to movies hash table 
+		stringstream movieStream(line);
+		string movId, movName, movRYear, movTitle, movPlot;
+		getline(movieStream, movId, ',');
+		getline(movieStream, movTitle, ',');
+		getline(movieStream, movPlot, ',');
+		getline(movieStream, movRYear, ',');
+		int movieId = stoi(movId);
+		int movieReleasedYear = stoi(movRYear);
+		Movie movie(movieId, movTitle, movPlot, movieReleasedYear);
+		movieHashTable->add(movieReleasedYear,movie);
+	}

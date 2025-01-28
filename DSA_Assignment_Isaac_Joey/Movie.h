@@ -5,12 +5,13 @@ class Movie
 {
 	private:
 		int movieId;
-		int releasedYear;
 		string movieTitle;
+		string moviePlot;
+		int releasedYear;
 	public:
 		// Public methods, getterrs and setters and constructor 
 		Movie();  // default constructor 
-		Movie(int mId, int rYear, string mTitle); // parameterized constructor 
+		Movie(int mId, string mTitle, string mPlot, int mReleasedYear); // parameterized constructor 
 		void setReleasedYear(int rYear);
 		void setMovieTitle(string mTitle);
 		int getReleasedYear();

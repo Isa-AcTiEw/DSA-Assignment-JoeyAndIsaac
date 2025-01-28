@@ -2,10 +2,11 @@
 #include <iostream>
 using namespace std;
 Movie::Movie() {};
-Movie::Movie(int mId, int rYear, string mTitle) {
-	movieId = mId,
-	releasedYear = rYear;
+Movie::Movie(int mId, string mTitle, string mPlot, int mReleasedYear) {
+	movieId = mId;
 	movieTitle = mTitle;
+	moviePlot = mPlot;
+	releasedYear = mReleasedYear;
 };
 
 void Movie::setReleasedYear(int rYear) {
@@ -20,8 +21,9 @@ int Movie::getReleasedYear() {
 	return releasedYear;
 }
 
+
 int Movie::getKey() {
-	return releasedYear;
+	return movieId;
 }
 
 void Movie::displayInfo() {

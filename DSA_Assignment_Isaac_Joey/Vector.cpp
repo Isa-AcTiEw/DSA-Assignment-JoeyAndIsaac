@@ -1,9 +1,17 @@
 #include "Vector.h"
+#include "Actor.h"
+#include "Movie.h"
 #include <iostream>
+#include "AVLTree.h"
 using namespace std;
 
 // explicit template class definitions 
 template class Vector<int>;
+template class Vector<bool>;
+template class Vector<Vector<int>>;
+template class Vector<Movie*>;
+template class Vector<Actor*>;
+template class Vector<string>;
 
 template <class T>
 Vector<T>::Vector() : size(0), capacity(40) {
@@ -23,13 +31,24 @@ T& Vector<T>::operator[](int index) const{
 	}
 }
 
+template <class T>
+
+T& Vector<T>::operator[](int index){
+	if (index <= capacity) {
+		return dynamicArray[index];
+	}
+	else {
+		cout << "Index is out of range" << endl;
+	}
+}
+
 // Precondition: none 
 // Postcondition: The size of the array increases and if the element inserted to the array exceeds the maximum capacity, the capacity
 // increases exponentially due to the parameters passed in 
 // Time Complexity: Worst-Case O(n+1) : copy the array into the new array and allocate new memory, insert the element at size + 1 pos O(1)
 // Average Case: O(1) time - complexity: i increase the index of size (insertion at rear) no shifting of elements necessary
 template<class T>
-bool Vector<T>::pushBack(const T& item) {
+bool Vector<T>::pushBack(T item) {
 	if (size == capacity) {
 		// call resize function (to allocate new memory for new aray items)
 		resize(capacity * 2); // increase the capacity exponentially each time i exceed or run out of memory 
@@ -62,9 +81,9 @@ void Vector<T>::resize(int newCapacity) {
 }
 
 // Function to print all elements in the array
+
 template <class T>
-void Vector<T>::print() {
-	for (int i = 0; i < size; i++) {
-		cout << dynamicArray[i] << endl;
-	}
+
+int Vector<T>::getLength() {
+	return size;
 }

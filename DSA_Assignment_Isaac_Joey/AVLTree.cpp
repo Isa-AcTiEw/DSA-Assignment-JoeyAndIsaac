@@ -1,136 +1,164 @@
-
 #include "AVLTree.h"
+#include "Actor.h"
+#include "Movie.h"
 #include <iostream>
-#define max(x,y) ((x > y)? x : y)
-template <class T>
-// constructor 
+#include <algorithm>  // For std::max
 
+template class AVLTree<Actor>;
+template class AVLTree<Movie>;
+
+template <class T>
+// Constructor
 AVLTree<T>::AVLTree() {
-	root = nullptr;
+    root = nullptr;
 }
 
 template <class T>
-
 void AVLTree<T>::insert(T item) {
-	// create the node here 
-	string key = item->getKey();
-	AVLNode* avlNode;
-	avlNode->key = key;
-	avlNode->item = item;
-	if (root == nullptr) {
-		root = avlNode;
-	}
-	else {
-		// call the recursive function 
-		insertRecursive(root, key, item);
-	}
-}
-
-// *& is a reference to a pointer variable 
-template <class T>
-void AVLTree<T>::insertRecursive(AVLNode<T>*& root, string key, T item) {
-	// recursive base case if the root == nullptr 
-	AVLNode<T>* newNode = new AVLNode<T>();
-	// base case the tree is automatically balanced at that node (left and right height is 0, height of node is 1)
-	if (root == nullptr) {
-
-		newNode->key = key;
-		newNode->item = item;
-		return;
-	}
-	else {
-		if (key < root->key) {
-			// update the left subtree pointer to the newNode that is inserted on the leftSubtree
-			root->left = insertRecursive(root->left,key,item);
-		}
-		else {
-			root->right = insertRecursive(root->right,key,item);
-		}
-	}
-
-	// Account for any imbalancing during insertion (after the node is inserted, i can access its predecessor node (parent) to check if its balanced 
-	int bf = getBalanceFactor(root);
-	// Perform right rotation  (Tree's right subtree is heavier means the height is > 0, but since we take height(left) - height(right) i will get a negative number 
-	// balance factor is < 0
-	if (bf > 1 && newNode->key < root->left->key) {
-		return rotateRight(root);
-	}
-	// Perform left rotation (Tree's left subtree is heavier means the height > 0) 
-	// balance factor > 0
-	if (bf < -1 && newNode->key < root->right->key) {
-		return rotateLeft(root);
-	}
-	// Perform Left-Right rotation
-	if (bf > 1 && newNode->key > root->right->key) {
-		root->left = rotateLeft(root->left);
-		return rotateRight(root);
-	}
-	// Perform Right-Left rotation 
-	if (bf < -1 && newNode->key < root->right->key) {
-		root->right = rotateRight(root->right);
-		return rotateLeft(root);
-	}
-
-	
-	
-}
-
-
-template <class T>
-AVLNode<T>* AVLTree<T>::rotateRight(AVLNode<T>*& node) {
-	// rotate the tree to the right 
-	AVLNode* c = node->left;
-	node->left = c->right;
-	c->right = node;
-	return c;
+    int key = item.getKey();
+    cout << "This is the given key: " << key << endl;
+    AVLNode<T>* avlNode = new AVLNode<T>();  // Correctly allocate memory for avlNode
+    avlNode->key = key;
+    avlNode->item = item;
+    if (root == nullptr) {
+        root = avlNode;
+    }
+    else {
+        insertRecursive(root,key,item);
+    }
 }
 
 template <class T>
-AVLNode<T>* AVLTree<T>::rotateLeft(AVLNode<T>*& node) {
-	// rotate tree to the left 
-	AVLNode* c = node->right;
-	node->right = c->left;
-	c->left = node;
-	return c;
+void AVLTree<T>::insertRecursive(AVLNode<T>*& t, int key, T item) {
+    // root is just a pointer to a reference used to traversed the entire avl tree 
+    if (t == nullptr) {
+        AVLNode<T>* newNode = new AVLNode<T>;
+        newNode->key = key;
+        newNode->item = item;
+        newNode->left = nullptr;
+        newNode->right = nullptr;
+        t = newNode; // attatch the leaf node 
+        return;
+    }
+
+    if (key > t->key) {
+       insertRecursive(t->right, key, item);
+       cout << "The key is greater: " << endl;
+    }
+    else if (key < t->key){
+        insertRecursive(t->left, key, item);
+        cout << "The key is lesser: " << endl;
+    }
+
+    // Recalculate balance factor after insertion
+    int bf = getBalanceFactor(t);
+
+    // Right rotation
+    if (bf > 1 && key < t->left->key) {
+       rotateRight(t);
+    }
+    // Left rotation
+    if (bf < -1 && key > t->right->key) {
+        rotateLeft(t);
+    }
+    // Left-Right rotation
+    if (bf > 1 && key > t->left->key) {
+        rotateLeft(t->left);
+    }
+    // Right-Left rotation
+    if (bf < -1 && key < t->right->key) {
+        rotateRight(t->right);
+    }
+
 }
 
 template <class T>
+void AVLTree<T>::rotateRight(AVLNode<T>*& node) {
+    AVLNode<T>* c = node->left;
+    node->left = c->right;
+    c->right = node;
 
-// This function given the root of the avl tree returns the height of the whole tree 
-// since an avl tree is balanced the time complexity of getHeight is O(n) where log n reperesents the number of nodes within the tree 
-// Recursively go through the right and left subtrees of each node, height is 1 + max(rightHeight,leftHeight)
+    // Update heights
+    node->height = 1 + std::max(height(node->left), height(node->right));
+    c->height = 1 + std::max(height(c->left), height(c->right));
 
+    node = c;
+}
+
+template <class T>
+void AVLTree<T>::rotateLeft(AVLNode<T>*& node) {
+    AVLNode<T>* c = node->right;
+    node->right = c->left;
+    c->left = node;
+
+    // Update heights
+    node->height = 1 + std::max(height(node->left), height(node->right));
+    c->height = 1 + std::max(height(c->left), height(c->right));
+
+    node = c;
+}
+
+template <class T>
 int AVLTree<T>::height(AVLNode<T>* root) {
-	if (root == nullptr) {
-		return 0;
-	}
-	int leftHeight = height(root->left);
-	int rightHeight = height(root->right);
-	return 1 + max(leftHeight, rightHeight);
+    if (root == nullptr) {
+        return 0;
+    }
+    int leftHeight = height(root->left);
+    int rightHeight = height(root->right);
+    return 1 + std::max(leftHeight, rightHeight);  // Using std::max here
 }
 
 template <class T>
 int AVLTree<T>::getBalanceFactor(AVLNode<T>* root) {
-	if (root == nullptr) {
-		return 0;
-	}
-	else {
-		return height(root->left) - height(root->right);
-	}
+    if (root == nullptr) {
+        return 0;
+    }
+    return height(root->left) - height(root->right);
 }
 
 template <class T>
-
-// use inOrder traversal to display names in alphabetical order (automatically lexographically sorted when storing strings in a tree)
 void AVLTree<T>::print(AVLNode<T>* root) {
-	if (root == nullptr) {
-		return;
-	}
-	else {
-		print(root->left); // traverse the left subtree 
-		T data = root->item;
-		// print the data 
-		data->displayInfo();
-		print(root->right); // traverse the right subtree
-	}
+    if (root == nullptr) {
+        return;
+    }
+    print(root->left);  // Traverse left subtree
+    T data = root->item;
+    data.displayInfo();  // Print actor or movie info
+    print(root->right);  // Traverse right subtree
+}
+
+
+template <class T> 
+AVLNode<T>* AVLTree<T>::searchAVLById(AVLNode<T>* t,int id) {
+    if (t == nullptr) {
+        return nullptr;
+    }
+    else {
+        if (t->key == id) {
+            return t;
+        }
+        else {
+            if (t->key < id) {
+                return searchAVLById(t->right, id);
+            }
+            else {
+                return searchAVLById(t->left, id);
+            }
+        }
+    }
+}
+template <class T>
+void AVLTree<T>::print() {
+    print(root);
+}
+
+template <class T>
+AVLNode<T>* AVLTree<T>::searchAVLById(int id) {
+    return searchAVLById(root, id);
+}
+
+
+template <class T>
+AVLNode<T>* AVLTree<T>::getRoot() {
+    return root;
 }
