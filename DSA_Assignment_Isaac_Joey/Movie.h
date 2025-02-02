@@ -16,6 +16,7 @@ class Movie
 		void setMovieTitle(string mTitle);
 		int getReleasedYear();
 		int getKey();
+		string getMovieTitle();
 		void displayInfo();
 
 };

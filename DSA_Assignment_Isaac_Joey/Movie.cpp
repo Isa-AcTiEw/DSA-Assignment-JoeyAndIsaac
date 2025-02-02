@@ -1,5 +1,6 @@
 #include "Movie.h"
 #include <iostream>
+#include <iomanip>
 using namespace std;
 Movie::Movie() {};
 Movie::Movie(int mId, string mTitle, string mPlot, int mReleasedYear) {
@@ -17,6 +18,10 @@ void Movie::setMovieTitle(string mTitle) {
 	movieTitle = mTitle;
 }
 
+string Movie::getMovieTitle() {
+	return movieTitle;
+}
+
 int Movie::getReleasedYear() {
 	return releasedYear;
 }
@@ -27,7 +32,8 @@ int Movie::getKey() {
 }
 
 void Movie::displayInfo() {
-	cout << "MovieId: " << " " << movieId << endl;
-	cout << "Movie Title:  " << " " << movieTitle << endl;
-	cout << "Year of release: " << " " << releasedYear << endl;
+	cout << left << setw(10) << movieId
+		<< left << setw(25) << movieTitle
+		<< left << setw(10) << releasedYear
+		<< endl;
 }

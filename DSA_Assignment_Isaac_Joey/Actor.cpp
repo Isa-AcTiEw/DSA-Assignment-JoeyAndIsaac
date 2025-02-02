@@ -1,4 +1,5 @@
 #include "Actor.h"
+#include <iomanip>  
 #include <iostream>
 using namespace std;
 Actor::Actor() {};
@@ -21,7 +22,8 @@ void Actor::setActorBirthYear(int bYear) {
 	birthYear = bYear;
 };
 void Actor::displayInfo() {
-	cout << "Actor's Id: " << " " << actorId << endl;
-	cout << "Actor's name: " << " " << actorName << endl;
-	cout << "Actor's birth year: " << " " << birthYear << endl;
+	cout << left << setw(10) << actorId
+		 << left << setw(25) << actorName
+		 << left << setw(10) << birthYear
+		 << endl;
 };

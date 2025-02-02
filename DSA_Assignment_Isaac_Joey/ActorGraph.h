@@ -18,10 +18,12 @@ public:
 
 	// Search for index (Given an actor's name)
 	// Loop through the outer vertex and return the index of the vertex element whose name matches 
-	int searchIndex(string name);
+	int searchIndex(int sourceActorId);
 	void addActor(Actor*);
-	void addRelation(string sourceActor, string destActor);
-	void displayAllRelatedActors(string sourceActor);
+	void addRelation(int sourceActorId, int destActorId);
+	void displayAllRelatedActors(int sourceActorId);
+	void displayAllActors();
+	void printAdjacencyList();
 
 
 };

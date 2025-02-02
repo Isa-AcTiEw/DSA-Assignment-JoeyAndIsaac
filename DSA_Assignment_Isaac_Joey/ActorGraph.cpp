@@ -7,16 +7,29 @@
 ActorGraph::ActorGraph() {}
 
 void ActorGraph::addActor(Actor* actor) {
+	actor->displayInfo();
 	actorList.pushBack(actor);
 	// create an empty vector of int (actor indices for related actors)
 	adjacencyList.pushBack(Vector<int>());
 }
 
 
+void ActorGraph::displayAllActors() {
+	for (int i = 0; i < actorList.getLength(); i++) {
+		Actor a = *(actorList[i]);
+		cout << i  << endl;
+		a.displayInfo();
+	}
+}
+
+
 // retrieve the index of the actor based on it's name 
-int ActorGraph::searchIndex(string actorName) {
-	for (int i = 0; i++; i < actorList.getLength()) {
-		if (actorName == actorList[i]->getActorName()) {
+int ActorGraph::searchIndex(int actorId) {
+	cout << actorId << endl;
+	for (int i = 0; i < actorList.getLength(); i++) {
+		Actor a = *(actorList[i]);
+		if (actorId == a.getKey()) {
+			cout << a.getKey() << endl;
 			return i;
 		}
 	}
@@ -24,21 +37,57 @@ int ActorGraph::searchIndex(string actorName) {
 }
 
 // addRelationship (addEdges between nodes)
-void ActorGraph::addRelation(string sourceActor, string destActor) {
-	int sourceInd = searchIndex(sourceActor);
-	int destInd = searchIndex(destActor);
-	if (sourceInd || destInd == NULL) {
-		return;
+void ActorGraph::addRelation(int sourceActorId, int destinationActorId) {
+	// Get the indices of both actors in the actor list
+	int sourceInd = searchIndex(sourceActorId);
+	int destInd = searchIndex(destinationActorId);
+
+	// If either index is invalid (e.g., -1 or NULL), do nothing
+	if (sourceInd == -1 || destInd == -1) {
+		return;  // Either actor was not found
 	}
-	adjacencyList[sourceInd].pushBack(destInd);
-	adjacencyList[destInd].pushBack(sourceInd);
+
+	// Print the indices for debugging
+	cout << sourceInd << endl;
+	cout << destInd << endl;
+
+	// Prevent adding duplicate relationships by checking if the connection already exists
+	Vector<int>& sourceAdjList = adjacencyList[sourceInd];
+	Vector<int>& destAdjList = adjacencyList[destInd];
+
+	// Add the relationship if it's not already present (Prevent duplicate adding)
+	bool sourceExists = false;
+	for (int i = 0; i < sourceAdjList.getLength(); ++i) {
+		if (sourceAdjList[i] == destInd) {
+			sourceExists = true;
+			break;
+		}
+	}
+
+	bool destExists = false;
+	for (int i = 0; i < destAdjList.getLength(); ++i) {
+		if (destAdjList[i] == sourceInd) {
+			destExists = true;
+			break;
+		}
+	}
+
+	if (!sourceExists) {
+		sourceAdjList.pushBack(destInd);
+	}
+
+	if (!destExists) {
+		destAdjList.pushBack(sourceInd);
+	}
 }
+
+
 
 // displayAllRelatedActors 
 // Precondition: The graph (adjacencyList) must not be empty
 // PostCondition: Display all neighbours of the source node until the second degree of seperation 
 // Time complexity: O(n^2)
-void ActorGraph::displayAllRelatedActors(string sourceActor) {
+void ActorGraph::displayAllRelatedActors(int sourceActorId) {
 	// initialize vectors for tracking visited node,
 	// initalize another vector for tracking each level in the graph 
 	Vector<int> lvl;
@@ -47,7 +96,7 @@ void ActorGraph::displayAllRelatedActors(string sourceActor) {
 	Queue* neighbours = new Queue();
 	
 	// retrieve the index in adj list of sourceActor 
-	int source = searchIndex(sourceActor);
+	int source = searchIndex(sourceActorId);
 	// mark source as vistied 
 	visited[source] = true;
 	lvl[source] = 0;
@@ -79,3 +128,40 @@ void ActorGraph::displayAllRelatedActors(string sourceActor) {
 		}
 	}
 }
+
+
+void ActorGraph::printAdjacencyList() {
+	// Check if the actorList and adjacencyList are valid
+	if (actorList.getLength() == 0) {
+		std::cout << "No actors in the list." << std::endl;
+		return;
+	}
+
+	// Loop through each actor in the actorList
+	for (int i = 0; i < actorList.getLength(); ++i) {
+		Actor* actor = actorList[i];
+
+		// Print the actor's name and key (or other relevant info)
+		std::cout << "Actor " << actor->getActorName() << " (" << actor->getKey() << "): ";
+
+		// Get the corresponding adjacency list for this actor
+		Vector<int> adjList = adjacencyList[i];
+
+		// If the actor has no connections, print "No connections"
+		if (adjList.getLength() == 0) {
+			std::cout << "No connections" << std::endl;
+		}
+		else {
+			// Otherwise, print the indices of the connected actors
+			for (int j = 0; j < adjList.getLength(); ++j) {
+				// Print the index of the connected actor
+				int connectedActorIndex = adjList[j];
+				std::cout << connectedActorIndex << " ";  // Print index instead of actor name
+			}
+			std::cout << std::endl;
+		}
+	}
+}
+
+
+

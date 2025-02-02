@@ -30,8 +30,11 @@ public:
     // Get the number of elements in the hash table
     int getLength();
 
-    // Get the key (search in hashTable)
+    // Search the enitre hashTable based on actor's id or movie's id 
     AVLNode<T>* search(int id);
+
+    // get the corresponding AVLTree Node of the user to search the entire tree 
+    AVLTree<T>* getKey(int key);
 
     // Print the contents of the hash table
     void print();

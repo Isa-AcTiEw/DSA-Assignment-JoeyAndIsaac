@@ -124,6 +124,7 @@ void AVLTree<T>::print(AVLNode<T>* root) {
     print(root->left);  // Traverse left subtree
     T data = root->item;
     data.displayInfo();  // Print actor or movie info
+    cout << endl;
     print(root->right);  // Traverse right subtree
 }
 
@@ -135,6 +136,7 @@ AVLNode<T>* AVLTree<T>::searchAVLById(AVLNode<T>* t,int id) {
     }
     else {
         if (t->key == id) {
+            t->item.displayInfo();
             return t;
         }
         else {
