@@ -14,9 +14,11 @@ class Movie
 		Movie(int mId, string mTitle, string mPlot, int mReleasedYear); // parameterized constructor 
 		void setReleasedYear(int rYear);
 		void setMovieTitle(string mTitle);
+		void setMoviePlot(string mPlot);
 		int getReleasedYear();
 		int getKey();
 		string getMovieTitle();
+		string getMoviePlot();
 		void displayInfo();
 
 };

@@ -1,0 +1,268 @@
+﻿  AVLTree.cpp
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(14,4): warning C4227: anachronism used: qualifiers on reference are ignored
+  (compiling source file 'AVLTree.cpp')
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(14,4):
+      the template instantiation context (the oldest one first) is
+          C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(3,7):
+          while compiling class template 'Vector'
+  
+  ActorGraph.cpp
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(14,4): warning C4227: anachronism used: qualifiers on reference are ignored
+  (compiling source file 'ActorGraph.cpp')
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(14,4):
+      the template instantiation context (the oldest one first) is
+          C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(3,7):
+          while compiling class template 'Vector'
+  
+  DSA_Assignment_Isaac_Joey.cpp
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(14,4): warning C4227: anachronism used: qualifiers on reference are ignored
+  (compiling source file 'DSA_Assignment_Isaac_Joey.cpp')
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(14,4):
+      the template instantiation context (the oldest one first) is
+          C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(3,7):
+          while compiling class template 'Vector'
+  
+  HashTable.cpp
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(14,4): warning C4227: anachronism used: qualifiers on reference are ignored
+  (compiling source file 'HashTable.cpp')
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(14,4):
+      the template instantiation context (the oldest one first) is
+          C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(3,7):
+          while compiling class template 'Vector'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\HashTable.cpp(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\HashTable.cpp(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\HashTable.cpp(31,10): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\HashTable.cpp(31,10):
+      the template instantiation context (the oldest one first) is
+          C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\HashTable.cpp(7,32):
+          see reference to class template instantiation 'HashTable<Actor>' being compiled
+          C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\HashTable.cpp(27,37):
+          while compiling class template member function 'int HashTable<Actor>::hash(hashKey)'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\HashTable.cpp(35,17): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+  Movie.cpp
+  Vector.cpp
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(14,4): warning C4227: anachronism used: qualifiers on reference are ignored
+  (compiling source file 'Vector.cpp')
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(14,4):
+      the template instantiation context (the oldest one first) is
+          C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(3,7):
+          while compiling class template 'Vector'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\AVLTree.h(31,20): warning C4661: 'Vector<Movie *>::Vector(int,int)': no suitable definition provided for explicit template instantiation request
+  (compiling source file 'Vector.cpp')
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(11,3):
+      see declaration of 'Vector<Movie *>::Vector'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\AVLTree.h(31,20): warning C4661: 'bool Vector<Movie *>::deleteItem(T &)': no suitable definition provided for explicit template instantiation request
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\AVLTree.h(31,20): warning C4661:         with
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\AVLTree.h(31,20): warning C4661:         [
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\AVLTree.h(31,20): warning C4661:             T=Movie *
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\AVLTree.h(31,20): warning C4661:         ]
+  (compiling source file 'Vector.cpp')
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(13,8):
+      see declaration of 'Vector<Movie *>::deleteItem'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\AVLTree.h(31,20): warning C4661: 'void Vector<Movie *>::print(void)': no suitable definition provided for explicit template instantiation request
+  (compiling source file 'Vector.cpp')
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(17,8):
+      see declaration of 'Vector<Movie *>::print'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\AVLTree.h(43,20): warning C4661: 'Vector<Actor *>::Vector(int,int)': no suitable definition provided for explicit template instantiation request
+  (compiling source file 'Vector.cpp')
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(11,3):
+      see declaration of 'Vector<Actor *>::Vector'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\AVLTree.h(43,20): warning C4661: 'bool Vector<Actor *>::deleteItem(T &)': no suitable definition provided for explicit template instantiation request
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\AVLTree.h(43,20): warning C4661:         with
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\AVLTree.h(43,20): warning C4661:         [
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\AVLTree.h(43,20): warning C4661:             T=Actor *
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\AVLTree.h(43,20): warning C4661:         ]
+  (compiling source file 'Vector.cpp')
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(13,8):
+      see declaration of 'Vector<Actor *>::deleteItem'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\AVLTree.h(43,20): warning C4661: 'void Vector<Actor *>::print(void)': no suitable definition provided for explicit template instantiation request
+  (compiling source file 'Vector.cpp')
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(17,8):
+      see declaration of 'Vector<Actor *>::print'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(9,27): warning C4661: 'Vector<int>::Vector(int,int)': no suitable definition provided for explicit template instantiation request
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(11,3):
+      see declaration of 'Vector<int>::Vector'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(9,27): warning C4661: 'bool Vector<int>::deleteItem(T &)': no suitable definition provided for explicit template instantiation request
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(9,27): warning C4661:         with
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(9,27): warning C4661:         [
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(9,27): warning C4661:             T=int
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(9,27): warning C4661:         ]
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(13,8):
+      see declaration of 'Vector<int>::deleteItem'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(9,27): warning C4661: 'void Vector<int>::print(void)': no suitable definition provided for explicit template instantiation request
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(17,8):
+      see declaration of 'Vector<int>::print'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(10,28): warning C4661: 'Vector<bool>::Vector(int,int)': no suitable definition provided for explicit template instantiation request
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(11,3):
+      see declaration of 'Vector<bool>::Vector'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(10,28): warning C4661: 'bool Vector<bool>::deleteItem(T &)': no suitable definition provided for explicit template instantiation request
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(10,28): warning C4661:         with
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(10,28): warning C4661:         [
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(10,28): warning C4661:             T=bool
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(10,28): warning C4661:         ]
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(13,8):
+      see declaration of 'Vector<bool>::deleteItem'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(10,28): warning C4661: 'void Vector<bool>::print(void)': no suitable definition provided for explicit template instantiation request
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(17,8):
+      see declaration of 'Vector<bool>::print'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(11,35): warning C4661: 'Vector<Vector<int>>::Vector(int,int)': no suitable definition provided for explicit template instantiation request
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(11,3):
+      see declaration of 'Vector<Vector<int>>::Vector'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(11,35): warning C4661: 'bool Vector<Vector<int>>::deleteItem(T &)': no suitable definition provided for explicit template instantiation request
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(11,35): warning C4661:         with
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(11,35): warning C4661:         [
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(11,35): warning C4661:             T=Vector<int>
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(11,35): warning C4661:         ]
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(13,8):
+      see declaration of 'Vector<Vector<int>>::deleteItem'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(11,35): warning C4661: 'void Vector<Vector<int>>::print(void)': no suitable definition provided for explicit template instantiation request
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(17,8):
+      see declaration of 'Vector<Vector<int>>::print'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(14,30): warning C4661: 'Vector<std::string>::Vector(int,int)': no suitable definition provided for explicit template instantiation request
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(11,3):
+      see declaration of 'Vector<std::string>::Vector'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(14,30): warning C4661: 'bool Vector<std::string>::deleteItem(T &)': no suitable definition provided for explicit template instantiation request
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(14,30): warning C4661:         with
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(14,30): warning C4661:         [
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(14,30): warning C4661:             T=std::string
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(14,30): warning C4661:         ]
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(13,8):
+      see declaration of 'Vector<std::string>::deleteItem'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(14,30): warning C4661: 'void Vector<std::string>::print(void)': no suitable definition provided for explicit template instantiation request
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(17,8):
+      see declaration of 'Vector<std::string>::print'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661: 'Vector<Movie *>::Vector(int,int)': no suitable definition provided for explicit template instantiation request
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(11,3):
+      see declaration of 'Vector<Movie *>::Vector'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661: 'bool Vector<Movie *>::deleteItem(T &)': no suitable definition provided for explicit template instantiation request
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:         with
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:         [
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:             T=Movie *
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:         ]
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(13,8):
+      see declaration of 'Vector<Movie *>::deleteItem'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661: 'void Vector<Movie *>::print(void)': no suitable definition provided for explicit template instantiation request
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(17,8):
+      see declaration of 'Vector<Movie *>::print'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661: 'Vector<Actor *>::Vector(int,int)': no suitable definition provided for explicit template instantiation request
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(11,3):
+      see declaration of 'Vector<Actor *>::Vector'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661: 'bool Vector<Actor *>::deleteItem(T &)': no suitable definition provided for explicit template instantiation request
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:         with
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:         [
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:             T=Actor *
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:         ]
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(13,8):
+      see declaration of 'Vector<Actor *>::deleteItem'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661: 'void Vector<Actor *>::print(void)': no suitable definition provided for explicit template instantiation request
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(17,8):
+      see declaration of 'Vector<Actor *>::print'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661: 'Vector<int>::Vector(int,int)': no suitable definition provided for explicit template instantiation request
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(11,3):
+      see declaration of 'Vector<int>::Vector'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661: 'bool Vector<int>::deleteItem(T &)': no suitable definition provided for explicit template instantiation request
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:         with
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:         [
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:             T=int
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:         ]
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(13,8):
+      see declaration of 'Vector<int>::deleteItem'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661: 'void Vector<int>::print(void)': no suitable definition provided for explicit template instantiation request
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(17,8):
+      see declaration of 'Vector<int>::print'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661: 'Vector<bool>::Vector(int,int)': no suitable definition provided for explicit template instantiation request
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(11,3):
+      see declaration of 'Vector<bool>::Vector'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661: 'bool Vector<bool>::deleteItem(T &)': no suitable definition provided for explicit template instantiation request
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:         with
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:         [
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:             T=bool
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:         ]
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(13,8):
+      see declaration of 'Vector<bool>::deleteItem'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661: 'void Vector<bool>::print(void)': no suitable definition provided for explicit template instantiation request
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(17,8):
+      see declaration of 'Vector<bool>::print'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661: 'Vector<Vector<int>>::Vector(int,int)': no suitable definition provided for explicit template instantiation request
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(11,3):
+      see declaration of 'Vector<Vector<int>>::Vector'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661: 'bool Vector<Vector<int>>::deleteItem(T &)': no suitable definition provided for explicit template instantiation request
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:         with
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:         [
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:             T=Vector<int>
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:         ]
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(13,8):
+      see declaration of 'Vector<Vector<int>>::deleteItem'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661: 'void Vector<Vector<int>>::print(void)': no suitable definition provided for explicit template instantiation request
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(17,8):
+      see declaration of 'Vector<Vector<int>>::print'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661: 'Vector<std::string>::Vector(int,int)': no suitable definition provided for explicit template instantiation request
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(11,3):
+      see declaration of 'Vector<std::string>::Vector'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661: 'bool Vector<std::string>::deleteItem(T &)': no suitable definition provided for explicit template instantiation request
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:         with
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:         [
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:             T=std::string
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661:         ]
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(13,8):
+      see declaration of 'Vector<std::string>::deleteItem'
+  
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(17,21): warning C4661: 'void Vector<std::string>::print(void)': no suitable definition provided for explicit template instantiation request
+      C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.h(17,8):
+      see declaration of 'Vector<std::string>::print'
+  
+  Generating Code...
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(43,1): warning C4715: 'Vector<Movie *>::operator[]': not all control paths return a value
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(32,1): warning C4715: 'Vector<Actor *>::operator[]': not all control paths return a value
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(43,1): warning C4715: 'Vector<Actor *>::operator[]': not all control paths return a value
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(32,1): warning C4715: 'Vector<Movie *>::operator[]': not all control paths return a value
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(43,1): warning C4715: 'Vector<int>::operator[]': not all control paths return a value
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(32,1): warning C4715: 'Vector<int>::operator[]': not all control paths return a value
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(43,1): warning C4715: 'Vector<bool>::operator[]': not all control paths return a value
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(32,1): warning C4715: 'Vector<bool>::operator[]': not all control paths return a value
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(32,1): warning C4715: 'Vector<Vector<int> >::operator[]': not all control paths return a value
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(43,1): warning C4715: 'Vector<Vector<int> >::operator[]': not all control paths return a value
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(43,1): warning C4715: 'Vector<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >::operator[]': not all control paths return a value
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\Vector.cpp(32,1): warning C4715: 'Vector<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >::operator[]': not all control paths return a value
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\HashTable.cpp(42,1): warning C4715: 'HashTable<Actor>::hash': not all control paths return a value
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\HashTable.cpp(143,1): warning C4715: 'HashTable<Actor>::getKey': not all control paths return a value
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\HashTable.cpp(42,1): warning C4715: 'HashTable<Movie>::hash': not all control paths return a value
+C:\Users\Joey\source\repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\HashTable.cpp(143,1): warning C4715: 'HashTable<Movie>::getKey': not all control paths return a value
+  DSA_Assignment_Isaac_Joey.vcxproj -> C:\Users\Joey\Source\Repos\DSA-Assignment-JoeyAndIsaac\DSA_Assignment_Isaac_Joey\x64\Debug\DSA_Assignment_Isaac_Joey.exe
