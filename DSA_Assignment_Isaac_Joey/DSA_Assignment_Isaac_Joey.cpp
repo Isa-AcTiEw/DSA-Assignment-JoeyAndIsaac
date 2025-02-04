@@ -102,6 +102,9 @@ int main() {
 
 	// Insert known actors into the graph 
 	addKnownActorsFromCast(actorGraph, movieHashTable);
+
+	actorGraph->displayAllRelatedActors(102);
+
 	cout << "Welcome to the movie database" << endl;
 	while (true) {
 		displaySelectUser();

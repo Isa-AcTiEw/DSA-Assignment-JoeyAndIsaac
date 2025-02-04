@@ -97,17 +97,17 @@ void ActorGraph::displayAllRelatedActors(int sourceActorId) {
 	
 	// retrieve the index in adj list of sourceActor 
 	int source = searchIndex(sourceActorId);
+	cout << "This is the source id: " << source << endl;
 	// mark source as vistied 
 	visited[source] = true;
 	lvl[source] = 0;
-
-	// enqueue the source node 
 	neighbours->enqueue(source);
 
 	while (!neighbours->isEmpty()) {
 		// dequeue the current node 
-		int curr = 0;
+		int curr;
 		neighbours->getFront(curr);
+		cout << "This is the index at the front of the queue: " << curr << endl;
 
 		// print out the information of the actor 
 
@@ -118,13 +118,13 @@ void ActorGraph::displayAllRelatedActors(int sourceActorId) {
 		if (lvl[curr] > 2) {
 			break;
 		}
-		// process its neighbours 
-		for (int i = 0; i < adjacencyList[curr].getLength(); i++) {
-			if (!visited[i]) {
-				visited[i] = true;
-				lvl[i] = lvl[curr] + 1; // level of the current node add one 
-				neighbours->enqueue(i);
-			}
+		// init a new vertex to access the all the related nodes of the actors
+		Vector<int> temp = adjacencyList[curr];
+		for (int i = 0; i < temp.getLength(); i++) {
+			Actor* neighActor = actorList[i];
+			string actorName = neighActor->getActorName();
+			cout << actorName << endl;
+
 		}
 	}
 }
