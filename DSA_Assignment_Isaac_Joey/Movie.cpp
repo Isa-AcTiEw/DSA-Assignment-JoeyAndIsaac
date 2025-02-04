@@ -18,8 +18,16 @@ void Movie::setMovieTitle(string mTitle) {
 	movieTitle = mTitle;
 }
 
+void Movie::setMoviePlot(string mPlot) {
+	moviePlot = mPlot;
+}
+
 string Movie::getMovieTitle() {
 	return movieTitle;
+}
+
+string Movie::getMoviePlot() {
+	return moviePlot;
 }
 
 int Movie::getReleasedYear() {

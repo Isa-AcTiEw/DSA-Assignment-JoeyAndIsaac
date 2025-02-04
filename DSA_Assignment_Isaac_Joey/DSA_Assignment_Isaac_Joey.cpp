@@ -18,6 +18,7 @@ void displayAdminMenu();
 void displaySelectUser();
 void addRelationship(HashTable<Actor>* actors, HashTable<Movie>* movies);
 void handleUserFunctions(HashTable<Actor>* actorhash, HashTable<Movie>* movieHash, ActorGraph* actorgraph);
+void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHash);
 void addKnownActorsFromCast(ActorGraph* actors, HashTable<Movie>* movieHash); 
 int partition(Vector<Movie*> movies, int left, int right);
 void sortMovies(Vector<Movie*> movies, int left, int right);
@@ -108,16 +109,15 @@ int main() {
 	cout << "Welcome to the movie database" << endl;
 	while (true) {
 		displaySelectUser();
-		cout << endl;
+		cout << "Enter your Option: " << endl;
 		int useOption;
 		cin >> useOption;
-		if (useOption = 1) {
+		if (useOption == 1) {
 			handleUserFunctions(actorHashTable,movieHashTable,actorGraph);
 			break;
 		}
-
-		else if (useOption = 2) {
-			cout << "Admin selected " << endl;
+		else if (useOption == 2) {
+			handleAdminFunction(actorHashTable, movieHashTable);
 			break;
 		}
 		else {
@@ -221,23 +221,24 @@ void displaySelectUser() {
 }
 
 void displayAdminMenu() {
-	cout << "--------- Select an admin feature ---------" << endl;
+	cout << "---- Select an admin feature -----" << endl;
 	cout << "[1] Add new actor" << endl;
 	cout << "[2] Add new movie" << endl;
 	cout << "[3] add an actor to a movie" << endl;
 	cout << "[4] Update actor/movie details" << endl;
+	cout << "[0] Exit" << endl;
 	cout << "---------------------------------" << endl;
 }
 
 void displayUserMenu() {
-	cout << "----------------------------- Select a user feature ------------------------------" << endl;
+	cout << "-------------------------------- Select a user feature ---------------------------------" << endl;
 	cout << "[1] Display (in ascending order of age) the actors with age between x and y (inclusive)" << endl;
 	cout << "[2] Display movies made within the past 3 years (in ascending order of year)" << endl;
 	cout << "[3] Display all movies an actor starred in (in alphabetical order)" << endl;
 	cout << "[4] Display all the actors in a particular movie (in alphabetical order)" << endl;
 	cout << "[5] Display a list of all actors that a particular actor knows." << endl;
 	cout << "[0] to exit" << endl;
-	cout << "----------------------------------------------------------------------------------" << endl;
+	cout << "---------------------------------------------------------------------------------------" << endl;
 }
 
 void handleUserFunctions(HashTable<Actor>* actorhash, HashTable<Movie>* movieHash, ActorGraph* actorgraph) {
@@ -414,6 +415,154 @@ void sortActors(Vector<Actor*> actors, int left, int right) {
 	}
 	else {
 		return;
+	}
+}
+
+// Administrator features
+void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHash) {
+	while (true) {
+		displayAdminMenu();
+		int option;
+		cout << "Enter your option: ";
+		cin >> option;
+
+		// Adding New Actor
+		if (option == 1) {
+			cout << "Add new actor" << endl;
+			int actorId, birthYear;
+			string actorName;
+
+			cout << "Enter Actor ID: ";
+			cin >> actorId;
+			cin.ignore();
+			cout << "Enter Actor Name: ";
+			getline(cin, actorName);
+			cout << "Enter Birth Year: ";
+			cin >> birthYear;
+
+			Actor newActor(actorId, actorName, birthYear);
+			actorhash->add(birthYear, newActor);
+
+			cout << "New actor added successfully!" << endl;
+		}
+
+		// Adding New Movie
+		else if (option == 2) {
+			cout << "Add new movie" << endl;
+			int movieId, releasedYear;
+			string movieTitle, moviePlot;
+
+			cout << "Enter Movie ID: ";
+			cin >> movieId;
+			cin.ignore();
+			cout << "Enter Movie Title: ";
+			getline(cin, movieTitle);
+			cout << "Enter Movie Plot: ";
+			getline(cin, moviePlot);
+			cout << "Enter Release Year: ";
+			cin >> releasedYear;
+
+			Movie newMovie(movieId, movieTitle, moviePlot, releasedYear);
+			movieHash->add(releasedYear, newMovie);
+
+			cout << "New movie added successfully!" << endl;
+		}
+
+		// Adding Actor to a Movie
+		else if (option == 3) {
+			cout << "Add an actor to a movie" << endl;
+			int actorId, movieId;
+			cout << "Enter Actor ID: ";
+			cin >> actorId;
+			cout << "Enter Movie ID: ";
+			cin >> movieId;
+
+			AVLNode<Movie>* movieNode = movieHash->search(movieId);
+			AVLNode<Actor>* actorNode = actorhash->search(actorId);
+
+			if (movieNode && actorNode) {
+				Movie* moviePtr = &(movieNode->item);
+				Actor* actorPtr = &(actorNode->item);
+
+				movieNode->relatedPointers.pushBack(actorPtr);
+				actorNode->relatedPointers.pushBack(moviePtr);
+
+				cout << "Actor added to the movie successfully!" << endl;
+			}
+			else {
+				cout << "Actor or Movie not found!" << endl;
+			}
+		}
+
+		// Updating Actor/Movie Details
+		else if (option == 4) {
+			cout << "Update actor/movie details" << endl;
+			int choice;
+			cout << "Update (1) Actor or (2) Movie? ";
+			cin >> choice;
+
+			if (choice == 1) {
+				int actorId;
+				cout << "Enter Actor ID: ";
+				cin >> actorId;
+
+				AVLNode<Actor>* actorNode = actorhash->search(actorId);
+				if (actorNode) {
+					string newName;
+					int newBirthYear;
+					cout << "Enter New Name: ";
+					cin.ignore();
+					getline(cin, newName);
+					cout << "Enter New Birth Year: ";
+					cin >> newBirthYear;
+
+					actorNode->item.setActorName(newName);
+					actorNode->item.setActorBirthYear(newBirthYear);
+					cout << "Actor details updated!" << endl;
+				}
+				else {
+					cout << "Actor not found!" << endl;
+				}
+			}
+			else if (choice == 2) {
+				int movieId;
+				cout << "Enter Movie ID: ";
+				cin >> movieId;
+
+				AVLNode<Movie>* movieNode = movieHash->search(movieId);
+				if (movieNode) {
+					string newTitle;
+					string newPlot;
+					int newYear;
+					cout << "Enter New Movie Title: ";
+					cin.ignore();
+					getline(cin, newTitle);
+					cout << "Enter New Movie Plot: ";
+					getline(cin, newPlot);
+					cout << "Enter New Movie Release Year: ";
+					cin >> newYear;
+
+
+					movieNode->item.setMovieTitle(newTitle);
+					movieNode->item.setMoviePlot(newPlot);
+					movieNode->item.setReleasedYear(newYear);
+					cout << "Movie details updated!" << endl;
+				}
+				else {
+					cout << "Movie not found!" << endl;
+				}
+			}
+		}
+
+		else if (option == 0) {
+			break;
+			displaySelectUser();
+		}
+		else {
+			cout << "Invalid Option" << endl;
+
+		}
+
 	}
 }
 
