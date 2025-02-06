@@ -164,3 +164,43 @@ template <class T>
 AVLNode<T>* AVLTree<T>::getRoot() {
     return root;
 }
+
+template <class T>
+AVLNode<T>* AVLTree<T>::removeNode(AVLNode<T>* root, int key) {
+    if (root == nullptr) return root;
+
+    if (key < root->key) {
+        root->left = removeNode(root->left, key);
+    }
+    else if (key > root->key) {
+        root->right = removeNode(root->right, key);
+    }
+    else {
+        // Found node to be deleted
+        if (root->left == nullptr) {
+            AVLNode<T>* temp = root->right;
+            delete root;
+            return temp;
+        }
+        else if (root->right == nullptr) {
+            AVLNode<T>* temp = root->left;
+            delete root;
+            return temp;
+        }
+
+        // Node with two children: find in-order successor
+        AVLNode<T>* temp = root->right;
+        while (temp->left != nullptr) temp = temp->left;
+
+        root->key = temp->key;
+        root->item = temp->item;
+        root->right = removeNode(root->right, temp->key);
+    }
+
+    return root;  // Return the new root
+}
+
+template <class T>
+void AVLTree<T>::remove(int key) {
+    root = removeNode(root, key);
+}

@@ -70,6 +70,8 @@ public:
     void insertRecursive(AVLNode<T>*& root,int key,T item);
     int getBalanceFactor(AVLNode<T>* root); 
     void print(AVLNode<T>* root);
+    void remove(int key);
+    AVLNode<T>* removeNode(AVLNode<T>* root, int key);
     AVLNode<T>* searchAVLById(int id);
     AVLNode<T>* searchAVLById(AVLNode<T>* t, int id);
     AVLNode<T>* getRoot();

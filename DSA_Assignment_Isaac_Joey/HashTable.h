@@ -18,6 +18,8 @@ public:
     // Constructor for the HashTable
     HashTable();
 
+    bool remove(hashKey key);
+
     // Hash function to map key to an index
     int hash(hashKey newKey);
 
