@@ -12,10 +12,21 @@ template class Vector<Vector<int>>;
 template class Vector<Movie*>;
 template class Vector<Actor*>;
 template class Vector<string>;
+template class Vector<AVLNode<Movie>*>;
+template class Vector<AVLNode<Actor>*>;
 
 template <class T>
 Vector<T>::Vector() : size(0), capacity(40) {
 	dynamicArray = new T[capacity];  // Initialize the dynamic array with the specified capacity
+}
+template <class T>
+Vector<T>::Vector(int cap, T item) {
+	capacity = cap;
+	size = cap;  // Fill the array with 'cap' copies of 'item'
+	dynamicArray = new T[capacity];
+	for (int i = 0; i < size; i++) {
+		dynamicArray[i] = item;  // Fill array with 'item'
+	}
 }
 template <class T>
 

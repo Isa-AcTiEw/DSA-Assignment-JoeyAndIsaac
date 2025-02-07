@@ -22,7 +22,7 @@ void Movie::setMoviePlot(string mPlot) {
 	moviePlot = mPlot;
 }
 
-string Movie::getMovieTitle() {
+string Movie::getName() {
 	return movieTitle;
 }
 

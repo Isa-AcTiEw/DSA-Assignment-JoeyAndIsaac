@@ -8,7 +8,7 @@ class Vector
 		int capacity;
 	public:
 		Vector();
-		Vector(int s, int c);
+		Vector(int s, T item);
 		bool pushBack(T item);
 		bool deleteItem(T& item);
 		T& const operator[](int index) const; // allows retrieval by list indices (read-only access)

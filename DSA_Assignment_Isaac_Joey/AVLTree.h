@@ -72,7 +72,12 @@ public:
     void print(AVLNode<T>* root);
     AVLNode<T>* searchAVLById(int id);
     AVLNode<T>* searchAVLById(AVLNode<T>* t, int id);
+    AVLNode<T>* searchAVLByName(string name);
+    AVLNode<T>* searchAVLByName(AVLNode<T>* t, string name);
     AVLNode<T>* getRoot();
+    void retrieveAll(Vector<AVLNode<T>*>& nodeList);
+    void retrieveAll(AVLNode<T>* temp, Vector<AVLNode<T>*>& nodeList);
+
     void print();
 };
 

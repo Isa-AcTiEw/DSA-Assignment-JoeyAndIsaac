@@ -12,7 +12,7 @@ int Actor::getKey() {
 	return actorId;
 };
 
-string Actor::getActorName() {
+string Actor::getName() {
 	return actorName;
 };
 void Actor::setActorName(string aName) {

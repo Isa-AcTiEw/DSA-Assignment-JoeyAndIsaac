@@ -1,4 +1,5 @@
 ﻿  ActorGraph.cpp
 C:\Year 2\Semester 2\DSA\Assignment\DSA_Assignment_Isaac_Joey\Vector.h(14,1): warning C4227: anachronism used: qualifiers on reference are ignored
 C:\Year 2\Semester 2\DSA\Assignment\DSA_Assignment_Isaac_Joey\Vector.h(19,2): message : see reference to class template instantiation 'Vector<T>' being compiled
+C:\Year 2\Semester 2\DSA\Assignment\DSA_Assignment_Isaac_Joey\ActorGraph.cpp(181): warning C4715: 'ActorGraph::getActorByName': not all control paths return a value
   DSA_Assignment_Isaac_Joey.vcxproj -> C:\Year 2\Semester 2\DSA\Assignment\DSA_Assignment_Isaac_Joey\x64\Debug\DSA_Assignment_Isaac_Joey.exe

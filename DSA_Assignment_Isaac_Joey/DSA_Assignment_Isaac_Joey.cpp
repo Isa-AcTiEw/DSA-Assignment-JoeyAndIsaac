@@ -60,7 +60,7 @@ int main() {
 
 		int movieId = stoi(movId);
 		int movRYear = stoi(movYear);
-
+		movTitle.erase(std::remove(movTitle.begin(), movTitle.end(), '"'), movTitle.end());
 		Movie movie(movieId, movTitle, movPlot, movRYear);
 		// add movie to hashTable 
 		movieHashTable->add(movRYear, movie);
@@ -81,6 +81,7 @@ int main() {
 		/*cout << "This is the actor's name: " << actorName << endl;*/
 
 		int aid = stoi(actorId);
+		actorName.erase(std::remove(actorName.begin(), actorName.end(), '"'), actorName.end());
 		int actorBirthYear = stoi(actorBYear);
 		Actor actor(aid,actorName,actorBirthYear);
 		//actor.displayInfo();
@@ -104,8 +105,7 @@ int main() {
 	// Insert known actors into the graph 
 	addKnownActorsFromCast(actorGraph, movieHashTable);
 
-	actorGraph->displayAllRelatedActors(102);
-
+	actorGraph->printAdjacencyList();
 	cout << "Welcome to the movie database" << endl;
 	while (true) {
 		displaySelectUser();
@@ -168,47 +168,36 @@ void addRelationship(HashTable<Actor>* actors, HashTable<Movie>* movies) {
 
 // Precondition: The actor HashTable is not null, and the cast csv is also not empty 
 // Postcondition: Add all known actors to a graph called actorGraph based on the given condition stated in the requirements both actors stared in the same movie or an actor knows another actor through a middleman (actor A2)
-// Time Complexity: TBD
+// Time Complexity: O(n)^3
 // For each actor maintain a list of vectors that will add actors belonging to the same movie 
 
 
+// Refactor the code to traverse the movieHashTable instead and retrieving all movieNodes
+// Use vector to store all movie nodes 
 void addKnownActorsFromCast(ActorGraph* actors, HashTable<Movie>* movieHash) {
-	ifstream castStream("cast.csv");
-	if (castStream.is_open()) {
-		string castLine;
-		getline(castStream, castLine);  // Read headers
-
-		while (getline(castStream, castLine)) {
-			stringstream cs(castLine);
-			string PId, mID;
-			getline(cs, PId, ','); // Read person id
-			getline(cs, mID, ','); // Read movie id
-
-			int movieId = stoi(mID); // Convert movieId to integer
-
-			// Search for the movie in the movieHash
-			AVLNode<Movie>* movieNode = movieHash->search(movieId);
-			if (movieNode != nullptr) {
-				// Retrieve the actors who starred in the same movie
-				Vector<Actor*> cast = movieNode->relatedPointers;
-				if (cast.getLength() > 0) {
-					for (int i = 0; i < cast.getLength(); i++) {
-						for (int j = i + 1; j < cast.getLength(); j++) {  // j starts from i + 1 to avoid double counting
-							Actor* currActor = cast[i];
-							Actor* nextActor = cast[j];
-							cout << "Adding " << currActor->getActorName() << " with " << nextActor->getActorName() << endl;
-							actors->addRelation(currActor->getKey(), nextActor->getKey());
-						}
-					}
+	Vector<AVLNode<Movie>*> movieNodeList;
+	movieHash->getAll(movieNodeList);
+	if (movieNodeList.getLength() > 0) {
+		// loop through
+		for (int i = 0; i < movieNodeList.getLength(); i++) {
+			AVLNode<Movie>* m = movieNodeList[i];
+			cout << "This is the movieTitle: " << m->item.getName() << endl;
+			Vector<Actor*> actorCast = m->relatedPointers;
+			for (int j = 0; j < actorCast.getLength(); j++) {
+				Actor* currentActor = actorCast[j];
+				for (int h = j + 1; h < actorCast.getLength(); h++) {
+					Actor* nextActor = actorCast[h];
+					actors->addRelation(currentActor->getKey(), nextActor->getKey());
 				}
 			}
-			else {
-				cout << "Error retrieving movie node for movieId: " << movieId << endl;
-			}
+
 		}
-		castStream.close();
+	}
+	else {
+		cout << "There is no movies in the list" << endl;
 	}
 }
+
 
 
 
@@ -297,10 +286,11 @@ void handleUserFunctions(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 
 		else if (option == 3) {
 			// retrieve all actors first 
-			cout << "Enter the actorId of the specific actor: ";
-			int actorId;
-			cin >> actorId;
-			AVLNode<Actor>* actorAVL = actorhash->search(actorId);
+			cout << "Enter the actor name: ";
+			string actorName;
+			cin.ignore();
+			getline(cin, actorName);
+			AVLNode<Actor>* actorAVL = actorhash->searchByName(actorName); 
 			if (actorAVL != nullptr) {
 				Vector<Movie*> movies;
 				movies = actorAVL->relatedPointers;
@@ -321,11 +311,12 @@ void handleUserFunctions(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 
 		else if (option == 4) {
 			// retrieve all movies first 
-			cout << "Enter the movieId of the specific movie: ";
-			int movieId;
-			cin >> movieId;
-			cout << movieId << endl;
-			AVLNode<Movie>* movieAVL = movieHash->search(movieId);
+			cout << "Enter the name of the specific movie: ";
+			string movieName;
+			cin.ignore();
+			getline(cin,movieName);
+			cout << movieName << endl;
+			AVLNode<Movie>* movieAVL = movieHash->searchByName(movieName);
 			if (movieAVL != nullptr) {
 				Vector<Actor*> cast;
 				cast = movieAVL->relatedPointers;
@@ -343,6 +334,15 @@ void handleUserFunctions(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 				
 			}
 		}
+		else if (option == 5) {
+			cout << "Enter the actor's name: " << endl;
+			string name;
+			cin.ignore();
+			getline(cin,name);
+			int actorInd = actorgraph->getActorByName(name);
+			actorgraph->displayAllRelatedActors(actorInd);
+
+		}
 		
 		else if (option == 0) {
 			break;
@@ -354,10 +354,10 @@ void handleUserFunctions(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 int partition(Vector<Movie*> movies, int left, int right) {
 	Movie* pivot = movies[(left + right) / 2];
 	while (left < right) {
-		while (movies[left]->getMovieTitle() < pivot->getMovieTitle()) {
+		while (movies[left]->getName() < pivot->getName()) {
 			left++; // increase the left index 
 		}
-		while (movies[right]->getMovieTitle() > pivot->getMovieTitle()) {
+		while (movies[right]->getName() > pivot->getName()) {
 			right--;
 		}
 		if (left < right) {
@@ -386,11 +386,11 @@ void sortMovies(Vector<Movie*> movies, int left, int right) {
 int partitionActors(Vector<Actor*> actors, int left, int right) {
 	Actor* pivot = actors[(left + right) / 2];
 	while (left <= right) {
-		while (actors[left]->getActorName() < pivot->getActorName()) {
-			cout << "Sorting" << actors[left]->getActorName() <<  " and " << pivot->getActorName() << endl;
+		while (actors[left]->getName() < pivot->getName()) {
+			cout << "Sorting" << actors[left]->getName() <<  " and " << pivot->getName() << endl;
 			left++; // increase the left index 
 		}
-		while (actors[right]->getActorName() > pivot->getActorName()) {
+		while (actors[right]->getName() > pivot->getName()) {
 			right--;
 		}
 		if (left <= right) {

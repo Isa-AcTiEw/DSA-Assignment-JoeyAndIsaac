@@ -2,6 +2,7 @@
 // Hash table class definition with separate chaining
 #include <iostream>
 #include "AVLTree.h"
+#include "Vector.h"
 #include <string>
 using namespace std;
 typedef int hashKey;
@@ -36,7 +37,10 @@ public:
     // get the corresponding AVLTree Node of the user to search the entire tree 
     AVLTree<T>* getKey(int key);
 
+    AVLNode<T>* searchByName(string name);
     // Print the contents of the hash table
     void print();
+
+    void getAll(Vector<AVLNode<T>*> &nodeList);
 };
 

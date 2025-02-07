@@ -4,6 +4,8 @@
 #include <cmath>
 #include "Actor.h";
 #include "Movie.h";
+#include <iostream>
+#include <stdexcept>  // For std::invalid_argument or std::runtime_error
 template class HashTable<Actor>;
 template class HashTable<Movie>;
 template <class T>
@@ -75,9 +77,6 @@ void HashTable<T>::print() {
 
 template <class T>
 
-#include <iostream>
-#include <stdexcept>  // For std::invalid_argument or std::runtime_error
-
 AVLNode<T>* HashTable<T>::search(int id) {
 	try {
 		std::cout << "Searching for ID: " << id << std::endl;
@@ -125,6 +124,34 @@ AVLNode<T>* HashTable<T>::search(int id) {
 	return nullptr;
 }
 
+template <class T>
+// return the item of the actor (movie or actor) 
+AVLNode<T>* HashTable<T>::searchByName(string name) {
+	try {
+		cout << "Searching for actor's name: " << name << endl;
+		for (int i = 0; i < MAX_SIZE; i++) {
+			// call search for name method
+			AVLTree<T>* avltreePtr = items[i];
+			AVLNode<T>* itemAvlNode = avltreePtr->searchAVLByName(name);
+			if (itemAvlNode != nullptr) {
+				return itemAvlNode;
+			}
+		}
+	}
+	catch (const invalid_argument& e) {
+		cerr << "Invalid argument: " << e.what() << endl;
+	}
+	catch (const runtime_error& e) {
+		cerr << "Runtime error: " << e.what() << endl;
+	}
+	catch (const exception& e) {
+		cerr << "Error: " << e.what() << std::endl;
+	}
+}
+
+
+
+
 
 template <class T>
 AVLTree<T>* HashTable<T>::getKey(int key) {
@@ -139,5 +166,28 @@ AVLTree<T>* HashTable<T>::getKey(int key) {
 		else {
 			return nullptr;
 		}
+	}
+}
+
+template <class T>
+void HashTable<T>::getAll(Vector<AVLNode<T>*> &nodeList){
+	try {
+		for (int i = 0; i < MAX_SIZE; i++) {
+			AVLTree<T>* avlTreePtr = items[i];
+			if (avlTreePtr != nullptr) {
+				avlTreePtr->retrieveAll(nodeList);
+			}
+			
+		}
+		
+	}
+	catch (const invalid_argument& e) {
+		cerr << "Invalid argument: " << e.what() << endl;
+	}
+	catch (const runtime_error& e) {
+		cerr << "Runtime error: " << e.what() << endl;
+	}
+	catch (const exception& e) {
+		cerr << "Error: " << e.what() << std::endl;
 	}
 }

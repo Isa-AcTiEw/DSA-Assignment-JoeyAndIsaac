@@ -149,6 +149,44 @@ AVLNode<T>* AVLTree<T>::searchAVLById(AVLNode<T>* t,int id) {
         }
     }
 }
+
+
+template <class T> 
+AVLNode<T>* AVLTree<T>::searchAVLByName(string name) {
+    // if the name is found in the root of the avltree
+    if (root != nullptr) {
+        if (root->item.getName() == name) {
+            return root;
+        }
+        else {
+            return searchAVLByName(root,name);
+        }
+    }
+    else {
+        return nullptr;
+    }
+}
+
+template <class T>
+AVLNode<T>* AVLTree<T>::searchAVLByName(AVLNode<T>* t, string name) {
+    if (t == nullptr) {
+        return nullptr; // Base case: If the node is null, return null
+    }
+
+    // Search in the left subtree first (In-Order Traversal)
+    AVLNode<T>* leftResult = searchAVLByName(t->left, name);
+    if (leftResult != nullptr) {
+        return leftResult;
+    }
+    // Check the current node
+    if (t->item.getName() == name) {
+        return t; // Found the node, return it
+    }
+
+    // Search in the right subtree
+    return searchAVLByName(t->right, name);
+}
+
 template <class T>
 void AVLTree<T>::print() {
     print(root);
@@ -163,4 +201,24 @@ AVLNode<T>* AVLTree<T>::searchAVLById(int id) {
 template <class T>
 AVLNode<T>* AVLTree<T>::getRoot() {
     return root;
+}
+
+template <class T>
+void AVLTree<T>::retrieveAll(Vector<AVLNode<T>*>& nodeList) {
+    if (root != nullptr) {
+        retrieveAll(root, nodeList);
+    }
+}
+template <class T>
+
+void AVLTree<T>::retrieveAll(AVLNode<T>* temp, Vector<AVLNode<T>*>& nodeList) {
+    if (temp == nullptr) {
+        return;
+    }
+    else {
+        retrieveAll(temp->left, nodeList);
+        cout << "This is temp: " << temp->item.getName() << endl;
+        nodeList.pushBack(temp); // store the current node (after temp == nullptr, exits recursion)
+        retrieveAll(temp->right, nodeList);
+    }
 }

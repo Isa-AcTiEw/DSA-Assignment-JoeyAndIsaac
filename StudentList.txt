@@ -1,0 +1,15 @@
+Good morning mr ben and my fellow classmates my name is isaac tiew a year 2 student currently pursuing a diploma in IT at Ngee Ann Polytechnic with a strong aptitude for programming and a desire to develop applications that are able to cater to the needs of individuals within our communities. Through the course of my studies u have acquired skills related with the domain of web development, android application development, database management and design, UI/UX design. In my recent project i leveraged cloud technologies to implement an ad distribution system using AWS services such as dynamodb and s3 buckets, i also utilised the react front end framework for building reusable and customizable ui components. I aspire to become a software
+
+
+
+
+1.30: Joey
+1.075: Xavier
+1:01.30 : Edric
+50s : YX
+56.91 : DingXuan
+48.93: Evan 
+40:12: Jason
+54:34: Anne Marrie
+42:36: Lavniya
+1:22 : Daniel

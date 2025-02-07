@@ -88,44 +88,53 @@ void ActorGraph::addRelation(int sourceActorId, int destinationActorId) {
 // PostCondition: Display all neighbours of the source node until the second degree of seperation 
 // Time complexity: O(n^2)
 void ActorGraph::displayAllRelatedActors(int sourceActorId) {
-	// initialize vectors for tracking visited node,
-	// initalize another vector for tracking each level in the graph 
-	Vector<int> lvl;
+	// initialize vectors for tracking visited node with size of adjacencyList and a default value
+	// initalize another vector for tracking each level in the graph with size of adjacencyList and a default value
+	int length = adjacencyList.getLength();
+	Vector<int> lvl(adjacencyList.getLength(),-1); 
 	// initialize queue for processing all neighbours of the current node 
-	Vector<bool> visited;
+	Vector<bool> visited(adjacencyList.getLength(),false);
+	// intialize all visited to false
 	Queue* neighbours = new Queue();
-	
-	// retrieve the index in adj list of sourceActor 
-	int source = searchIndex(sourceActorId);
-	cout << "This is the source id: " << source << endl;
 	// mark source as vistied 
-	visited[source] = true;
-	lvl[source] = 0;
-	neighbours->enqueue(source);
+	visited[sourceActorId] = true;
+	lvl[sourceActorId] = 0;
+	neighbours->enqueue(sourceActorId);
+
+	cout << "Source Actor Id: " << sourceActorId << endl;
 
 	while (!neighbours->isEmpty()) {
 		// dequeue the current node 
 		int curr;
 		neighbours->getFront(curr);
-		cout << "This is the index at the front of the queue: " << curr << endl;
-
 		// print out the information of the actor 
 
 		Actor* actorPtr = actorList[curr];
-		actorPtr->displayInfo();
 		neighbours->dequeue();
 
-		if (lvl[curr] > 2) {
+		if (lvl[curr] != 0) {
+			actorPtr->displayInfo();
+		}
+
+		if (lvl[curr] == 2) {
 			break;
 		}
 		// init a new vertex to access the all the related nodes of the actors
 		Vector<int> temp = adjacencyList[curr];
 		for (int i = 0; i < temp.getLength(); i++) {
-			Actor* neighActor = actorList[i];
-			string actorName = neighActor->getActorName();
-			cout << actorName << endl;
-
+			// check if the node have been visited 
+			int actorIndex = temp[i];
+			if (visited[actorIndex] == false) {
+				visited[actorIndex] = true;
+				Actor* neighActor = actorList[actorIndex];
+				neighbours->enqueue(actorIndex);
+				lvl[actorIndex] = lvl[curr] + 1;
+			}
+			else {
+				continue;
+			}
 		}
+
 	}
 }
 
@@ -142,7 +151,7 @@ void ActorGraph::printAdjacencyList() {
 		Actor* actor = actorList[i];
 
 		// Print the actor's name and key (or other relevant info)
-		std::cout << "Actor " << actor->getActorName() << " (" << actor->getKey() << "): ";
+		std::cout << "Actor " << actor->getName() << " (" << actor->getKey() << "): ";
 
 		// Get the corresponding adjacency list for this actor
 		Vector<int> adjList = adjacencyList[i];
@@ -159,6 +168,14 @@ void ActorGraph::printAdjacencyList() {
 				std::cout << connectedActorIndex << " ";  // Print index instead of actor name
 			}
 			std::cout << std::endl;
+		}
+	}
+}
+
+int ActorGraph::getActorByName(string name) {
+	for (int i = 0; i < actorList.getLength(); i++) {
+		if (actorList[i]->getName() == name) {
+			return i;
 		}
 	}
 }

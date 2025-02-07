@@ -24,6 +24,7 @@ public:
 	void displayAllRelatedActors(int sourceActorId);
 	void displayAllActors();
 	void printAdjacencyList();
+	int getActorByName(string name);
 
 
 };

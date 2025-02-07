@@ -17,7 +17,7 @@ class Movie
 		void setMoviePlot(string mPlot);
 		int getReleasedYear();
 		int getKey();
-		string getMovieTitle();
+		string getName();
 		string getMoviePlot();
 		void displayInfo();
 
