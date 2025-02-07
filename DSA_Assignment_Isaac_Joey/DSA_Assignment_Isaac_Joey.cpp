@@ -18,6 +18,8 @@ void displayAdminMenu();
 void displaySelectUser();
 void addRelationship(HashTable<Actor>* actors, HashTable<Movie>* movies);
 void handleUserFunctions(HashTable<Actor>* actorhash, HashTable<Movie>* movieHash, ActorGraph* actorgraph);
+void updateActorsCSV(HashTable<Actor>* actorhash);
+void updateMoviesCSV(HashTable<Movie>* movieHash);
 void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHash);
 void addKnownActorsFromCast(ActorGraph* actors, HashTable<Movie>* movieHash); 
 int partition(Vector<Movie*> movies, int left, int right);
@@ -418,6 +420,60 @@ void sortActors(Vector<Actor*> actors, int left, int right) {
 	}
 }
 
+// Update Actor.CSV File
+void updateActorsCSV(HashTable<Actor>* actorhash) {
+	ofstream actorFile("actors.csv", ios::trunc);
+
+	if (!actorFile.is_open()) {
+		cout << "Error opening actors.csv!" << endl;
+		return;
+	}
+
+	actorFile << "ActorID,ActorName,BirthYear\n";  // Write CSV header
+
+	for (int i = 0; i < 101; i++) {
+		AVLTree<Actor>* actorTree = actorhash->getKey(i);
+		if (actorTree && actorTree->getRoot() != nullptr) {
+			AVLNode<Actor>* current = actorTree->getRoot();
+			while (current) {
+				actorFile << current->item.getKey() << ","
+					<< current->item.getName() << ","
+					<< current->item.getKey() << "\n";
+				current = current->right;
+			}
+		}
+	}
+	actorFile.close();
+	cout << "Actors file updated!" << endl;
+}
+
+// Update Movies.CSV File
+void updateMoviesCSV(HashTable<Movie>* movieHash) {
+	ofstream movieFile("movies.csv", ios::trunc);
+
+	if (!movieFile.is_open()) {
+		cout << "Error opening movies.csv!" << endl;
+		return;
+	}
+
+	movieFile << "MovieID,MovieTitle,MoviePlot,ReleasedYear\n";
+
+	for (int i = 0; i < 101; i++) {
+		AVLTree<Movie>* movieTree = movieHash->getKey(i);
+		if (movieTree && movieTree->getRoot() != nullptr) {
+			AVLNode<Movie>* current = movieTree->getRoot();
+			while (current) {
+				movieFile << current->item.getKey() << ","
+					<< current->item.getName() << ","
+					<< current->item.getReleasedYear() << "\n";
+				current = current->right;
+			}
+		}
+	}
+	movieFile.close();
+	cout << "Movies file updated!" << endl;
+}
+
 // Administrator features
 void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHash) {
 	while (true) {
@@ -442,6 +498,7 @@ void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 
 			Actor newActor(actorId, actorName, birthYear);
 			actorhash->add(birthYear, newActor);
+			updateActorsCSV(actorhash);
 
 			cout << "New actor added successfully!" << endl;
 		}
@@ -464,6 +521,7 @@ void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 
 			Movie newMovie(movieId, movieTitle, moviePlot, releasedYear);
 			movieHash->add(releasedYear, newMovie);
+			updateMoviesCSV(movieHash);
 
 			cout << "New movie added successfully!" << endl;
 		}
@@ -508,17 +566,21 @@ void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 
 				AVLNode<Actor>* actorNode = actorhash->search(actorId);
 				if (actorNode) {
-					string newName;
-					int newBirthYear;
+					Actor temp = actorNode->item;
+
 					cout << "Enter New Name: ";
 					cin.ignore();
+					string newName;
 					getline(cin, newName);
 					cout << "Enter New Birth Year: ";
+					int newBirthYear;
 					cin >> newBirthYear;
 
-					actorNode->item.setActorName(newName);
-					actorNode->item.setActorBirthYear(newBirthYear);
-					cout << "Actor details updated!" << endl;
+					actorhash->remove(temp.getKey());
+					temp.setActorName(newName);
+					temp.setActorBirthYear(newBirthYear);
+					actorhash->add(newBirthYear, temp);
+					updateActorsCSV(actorhash);
 				}
 				else {
 					cout << "Actor not found!" << endl;
@@ -531,22 +593,21 @@ void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 
 				AVLNode<Movie>* movieNode = movieHash->search(movieId);
 				if (movieNode) {
-					string newTitle;
-					string newPlot;
-					int newYear;
-					cout << "Enter New Movie Title: ";
+					Movie temp = movieNode->item;
+
+					cout << "Enter New Title: ";
 					cin.ignore();
+					string newTitle;
 					getline(cin, newTitle);
-					cout << "Enter New Movie Plot: ";
-					getline(cin, newPlot);
-					cout << "Enter New Movie Release Year: ";
+					cout << "Enter New Release Year: ";
+					int newYear;
 					cin >> newYear;
 
-
-					movieNode->item.setMovieTitle(newTitle);
-					movieNode->item.setMoviePlot(newPlot);
-					movieNode->item.setReleasedYear(newYear);
-					cout << "Movie details updated!" << endl;
+					movieHash->remove(temp.getKey());
+					temp.setMovieTitle(newTitle);
+					temp.setReleasedYear(newYear);
+					movieHash->add(newYear, temp);
+					updateMoviesCSV(movieHash);
 				}
 				else {
 					cout << "Movie not found!" << endl;
@@ -556,7 +617,6 @@ void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 
 		else if (option == 0) {
 			break;
-			displaySelectUser();
 		}
 		else {
 			cout << "Invalid Option" << endl;

@@ -15,6 +15,11 @@ int Actor::getKey() {
 string Actor::getName() {
 	return actorName;
 };
+
+int Actor::getActorBirthYear() {
+	return birthYear;
+}
+
 void Actor::setActorName(string aName) {
 	 actorName = aName;
 }

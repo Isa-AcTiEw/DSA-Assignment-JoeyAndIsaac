@@ -191,3 +191,19 @@ void HashTable<T>::getAll(Vector<AVLNode<T>*> &nodeList){
 		cerr << "Error: " << e.what() << std::endl;
 	}
 }
+
+template <class T>
+bool HashTable<T>::remove(hashKey key) {
+	int index = hash(key);
+	AVLTree<T>* avlTree = items[index];
+
+	if (avlTree == nullptr) return false;
+
+	AVLNode<T>* node = avlTree->searchAVLById(key);
+	if (node) {
+		avlTree->remove(key);  // Assuming AVLTree remove() exists
+		size--;
+		return true;
+	}
+	return false;
+}
