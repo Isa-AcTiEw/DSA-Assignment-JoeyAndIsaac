@@ -8,7 +8,7 @@
 #include "Vector.h"
 #include "ActorGraph.h"
 #include "HashTable.h"
-#include <iomanip>  // For setw
+#include <iomanip> 
 #include "AVLTree.h"
 #include <ctime>
 using namespace std;
@@ -62,7 +62,9 @@ int main() {
 
 		int movieId = stoi(movId);
 		int movRYear = stoi(movYear);
-		movTitle.erase(std::remove(movTitle.begin(), movTitle.end(), '"'), movTitle.end());
+		if (movTitle.find('"', movTitle.length())) {
+			movTitle.erase(std::remove(movTitle.begin(), movTitle.end(), '"'), movTitle.end());
+		}
 		Movie movie(movieId, movTitle, movPlot, movRYear);
 		// add movie to hashTable 
 		movieHashTable->add(movRYear, movie);
@@ -83,6 +85,10 @@ int main() {
 		/*cout << "This is the actor's name: " << actorName << endl;*/
 
 		int aid = stoi(actorId);
+		cout << "This is actor id: " << aid << endl;
+		if (actorName.find('"', actorName.length())) {
+			actorName.erase(std::remove(actorName.begin(), actorName.end(), '"'), actorName.end());
+		}
 		actorName.erase(std::remove(actorName.begin(), actorName.end(), '"'), actorName.end());
 		int actorBirthYear = stoi(actorBYear);
 		Actor actor(aid,actorName,actorBirthYear);
@@ -438,7 +444,7 @@ void updateActorsCSV(HashTable<Actor>* actorhash) {
 			while (current) {
 				actorFile << current->item.getKey() << ","
 					<< current->item.getName() << ","
-					<< current->item.getKey() << "\n";
+					<< current->item.getActorBirthYear() << "\n";
 				current = current->right;
 			}
 		}
@@ -498,7 +504,7 @@ void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 
 			Actor newActor(actorId, actorName, birthYear);
 			actorhash->add(birthYear, newActor);
-			updateActorsCSV(actorhash);
+			//updateActorsCSV(actorhash);
 
 			cout << "New actor added successfully!" << endl;
 		}
@@ -521,7 +527,7 @@ void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 
 			Movie newMovie(movieId, movieTitle, moviePlot, releasedYear);
 			movieHash->add(releasedYear, newMovie);
-			updateMoviesCSV(movieHash);
+			//updateMoviesCSV(movieHash);
 
 			cout << "New movie added successfully!" << endl;
 		}

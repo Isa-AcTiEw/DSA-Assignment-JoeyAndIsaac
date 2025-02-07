@@ -16,9 +16,6 @@ string Actor::getName() {
 	return actorName;
 };
 
-int Actor::getActorBirthYear() {
-	return birthYear;
-}
 
 void Actor::setActorName(string aName) {
 	 actorName = aName;
@@ -26,6 +23,10 @@ void Actor::setActorName(string aName) {
 void Actor::setActorBirthYear(int bYear) {
 	birthYear = bYear;
 };
+
+int Actor::getActorBirthYear() {
+	return birthYear;
+}
 void Actor::displayInfo() {
 	cout << left << setw(10) << actorId
 		 << left << setw(25) << actorName

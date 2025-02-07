@@ -222,7 +222,6 @@ void AVLTree<T>::retrieveAll(AVLNode<T>* temp, Vector<AVLNode<T>*>& nodeList) {
         retrieveAll(temp->right, nodeList);
     }
 }
-}
 
 template <class T>
 AVLNode<T>* AVLTree<T>::removeNode(AVLNode<T>* root, int key) {

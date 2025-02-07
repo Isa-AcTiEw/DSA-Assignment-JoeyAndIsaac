@@ -14,6 +14,7 @@ class Actor
 		int getKey();
 		string getName();
 		void setActorName(string aName);
+		int getActorBirthYear();
 		void setActorBirthYear(int bYear);
 		void displayInfo();
 };
