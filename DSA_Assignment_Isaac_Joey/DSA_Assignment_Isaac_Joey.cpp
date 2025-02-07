@@ -26,9 +26,51 @@ int partition(Vector<Movie*> movies, int left, int right);
 void sortMovies(Vector<Movie*> movies, int left, int right);
 int partitionActors(Vector<Actor*> actors, int left, int right);
 void sortActors(Vector<Actor*> actors, int left, int right);
+void checkForUnormalisedData(string& title);
+
+void checkForUnormalisedData(string& title) {
+	// Check if the title contains double quotes and remove them
+	if (title.find('"') != std::string::npos) {
+		title.erase(std::remove(title.begin(), title.end(), '"'), title.end());
+	}
+
+}
+Vector<string> splitCSVLine(const string& line) {
+	Vector<string> result;
+	stringstream ss(line);
+	string field;
+	bool inQuotes = false;
+
+	while (getline(ss, field, ',')) {
+		// If the field starts with a quote and does not end with one, it's a quoted field
+		if (!field.empty() && field.front() == '"' && field.back() != '"') {
+			inQuotes = true;
+			result.pushBack(field);  // Using custom Vector's pushBack method
+			continue;
+		}
+
+		if (inQuotes) {
+			// Add the current field to the previous one and keep looking
+			string& lastField = result[result.getLength() - 1];  // Using custom operator[] and getLength
+			lastField += "," + field;
+
+			if (field.back() == '"') {
+				inQuotes = false;
+			}
+		}
+		else {
+			result.pushBack(field);  // Using custom Vector's pushBack method
+		}
+	}
+
+	return result;
+}
 
 
 int main() {
+	string name = "\"Hang-ro(course): Jeju, Joseon, Osaka\"";
+	checkForUnormalisedData(name);
+	cout << "This is name: " << name << endl;
 	Vector<int> numbers;
 	numbers.pushBack(1);
 	numbers.pushBack(2);
@@ -52,25 +94,27 @@ int main() {
 	// Read data lines
 	while (getline(movieStream, line)) {
 		stringstream ss(line);
-		string movId, movName, movTitle, movPlot, movYear;
+		string movId, movTitle, movPlot, movYear;
 
-		// Extract each field of the movie seperated by the comma delimeter 
+		// Extract each field of the movie separated by the comma delimiter 
 		getline(ss, movId, ',');   // Movie ID
-		getline(ss, movTitle, ','); // Movie Name
-		getline(ss, movPlot, ','); // Release Year
-		getline(ss, movYear, ',');
+		getline(ss, movTitle, ','); // Movie Title
+		getline(ss, movPlot, ','); // Movie Plot
+		getline(ss, movYear, ','); // Release Year
 
+		checkForUnormalisedData(movTitle);
+		cout << "Movie id: " << movId << endl;
+		cout << "Year Released: " << movYear << endl;
 		int movieId = stoi(movId);
 		int movRYear = stoi(movYear);
-		if (movTitle.find('"', movTitle.length())) {
-			movTitle.erase(std::remove(movTitle.begin(), movTitle.end(), '"'), movTitle.end());
-		}
+
+		// Create Movie object and add it to hash table
 		Movie movie(movieId, movTitle, movPlot, movRYear);
-		// add movie to hashTable 
 		movieHashTable->add(movRYear, movie);
 
 		cout << "Movie Title: " << movTitle << endl;
 	}
+
 
 	movieStream.close();
 	// line would be each line of the excel file 
@@ -122,11 +166,9 @@ int main() {
 		cin >> useOption;
 		if (useOption == 1) {
 			handleUserFunctions(actorHashTable,movieHashTable,actorGraph);
-			break;
 		}
 		else if (useOption == 2) {
 			handleAdminFunction(actorHashTable, movieHashTable);
-			break;
 		}
 		else {
 			break;
@@ -586,7 +628,7 @@ void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 					temp.setActorName(newName);
 					temp.setActorBirthYear(newBirthYear);
 					actorhash->add(newBirthYear, temp);
-					updateActorsCSV(actorhash);
+					//updateActorsCSV(actorhash);
 				}
 				else {
 					cout << "Actor not found!" << endl;
@@ -613,7 +655,7 @@ void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 					temp.setMovieTitle(newTitle);
 					temp.setReleasedYear(newYear);
 					movieHash->add(newYear, temp);
-					updateMoviesCSV(movieHash);
+					//updateMoviesCSV(movieHash);
 				}
 				else {
 					cout << "Movie not found!" << endl;
