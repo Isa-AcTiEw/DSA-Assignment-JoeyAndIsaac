@@ -17,5 +17,6 @@ class Actor
 		int getActorBirthYear();
 		void setActorBirthYear(int bYear);
 		void displayInfo();
+		int calculateAge();
 };
 

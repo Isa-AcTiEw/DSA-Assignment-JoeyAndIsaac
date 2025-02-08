@@ -10,11 +10,10 @@ class Vector
 		Vector();
 		Vector(int s, T item);
 		bool pushBack(T item);
-		bool deleteItem(T& item);
 		T& const operator[](int index) const; // allows retrieval by list indices (read-only access)
 		T& operator[](int index);
+		bool pushBack(T* item);
 		void resize(int newCapacity);
-		void print();
 		int getLength();
 };
 

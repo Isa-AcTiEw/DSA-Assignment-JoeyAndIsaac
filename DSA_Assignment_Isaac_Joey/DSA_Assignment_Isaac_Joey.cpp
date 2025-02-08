@@ -12,7 +12,6 @@
 #include "AVLTree.h"
 #include <ctime>
 using namespace std;
-void displayMenu();
 void displayUserMenu();
 void displayAdminMenu();
 void displaySelectUser();
@@ -26,23 +25,16 @@ int partition(Vector<Movie*> movies, int left, int right);
 void sortMovies(Vector<Movie*> movies, int left, int right);
 int partitionActors(Vector<Actor*> actors, int left, int right);
 void sortActors(Vector<Actor*> actors, int left, int right);
-void checkForUnormalisedData(string& title);
-
-void checkForUnormalisedData(string& title) {
-	// Check if the title contains double quotes and remove them
-	if (title.find('"') != std::string::npos) {
-		title.erase(std::remove(title.begin(), title.end(), '"'), title.end());
-	}
-
-}
 Vector<string> splitCSVLine(const string& line) {
 	Vector<string> result;
 	stringstream ss(line);
 	string field;
 	bool inQuotes = false;
 
+	// splits the whole csv line at the comma 
 	while (getline(ss, field, ',')) {
-		// If the field starts with a quote and does not end with one, it's a quoted field
+		// Check if the field contains is quoted "\"Hang-ro(course): Jeju, Joseon, Osaka"\" or \" Hello "\
+
 		if (!field.empty() && field.front() == '"' && field.back() != '"') {
 			inQuotes = true;
 			result.pushBack(field);  // Using custom Vector's pushBack method
@@ -51,15 +43,14 @@ Vector<string> splitCSVLine(const string& line) {
 
 		if (inQuotes) {
 			// Add the current field to the previous one and keep looking
-			string& lastField = result[result.getLength() - 1];  // Using custom operator[] and getLength
-			lastField += "," + field;
-
+			string& lastField = result[result.getLength() - 1]; // take the last item in the vector 
+			lastField += "," + field; // concatenate the last field with curent field 
 			if (field.back() == '"') {
 				inQuotes = false;
 			}
 		}
 		else {
-			result.pushBack(field);  // Using custom Vector's pushBack method
+			result.pushBack(field);  // the field does not contain quotes (add to result vector)
 		}
 	}
 
@@ -68,12 +59,6 @@ Vector<string> splitCSVLine(const string& line) {
 
 
 int main() {
-	string name = "\"Hang-ro(course): Jeju, Joseon, Osaka\"";
-	checkForUnormalisedData(name);
-	cout << "This is name: " << name << endl;
-	Vector<int> numbers;
-	numbers.pushBack(1);
-	numbers.pushBack(2);
 	HashTable<Movie>* movieHashTable = new HashTable<Movie>();
 	HashTable<Actor>* actorHashTable = new HashTable<Actor>();
 	ActorGraph* actorGraph = new ActorGraph();
@@ -93,27 +78,25 @@ int main() {
 	getline(actorStream, line);
 	// Read data lines
 	while (getline(movieStream, line)) {
-		stringstream ss(line);
-		string movId, movTitle, movPlot, movYear;
-
-		// Extract each field of the movie separated by the comma delimiter 
-		getline(ss, movId, ',');   // Movie ID
-		getline(ss, movTitle, ','); // Movie Title
-		getline(ss, movPlot, ','); // Movie Plot
-		getline(ss, movYear, ','); // Release Year
-
-		checkForUnormalisedData(movTitle);
-		cout << "Movie id: " << movId << endl;
-		cout << "Year Released: " << movYear << endl;
-		int movieId = stoi(movId);
-		int movRYear = stoi(movYear);
-
-		// Create Movie object and add it to hash table
-		Movie movie(movieId, movTitle, movPlot, movRYear);
-		movieHashTable->add(movRYear, movie);
-
-		cout << "Movie Title: " << movTitle << endl;
-	}
+        // Use the custom split function to correctly split the CSV line
+        Vector<string> columns = splitCSVLine(line);
+        
+        // Make sure to have at least 4 columns
+        if (columns.getLength() >= 4) {
+            string movId = columns[0];
+            string movTitle = columns[1];
+            string movPlot = columns[2];
+			string movYear = columns[3];
+            // Convert to integers
+            int movieId = stoi(movId);
+            int movRYear = stoi(movYear);
+			if (movRYear >= 1924) {
+				// Create Movie object and add it to hash table
+				Movie* newMovie = new Movie(movieId, movTitle, movPlot, movRYear);
+				movieHashTable->add(movRYear, newMovie);
+			}
+        }
+    }
 
 
 	movieStream.close();
@@ -129,35 +112,22 @@ int main() {
 		/*cout << "This is the actor's name: " << actorName << endl;*/
 
 		int aid = stoi(actorId);
-		cout << "This is actor id: " << aid << endl;
-		if (actorName.find('"', actorName.length())) {
-			actorName.erase(std::remove(actorName.begin(), actorName.end(), '"'), actorName.end());
-		}
-		actorName.erase(std::remove(actorName.begin(), actorName.end(), '"'), actorName.end());
 		int actorBirthYear = stoi(actorBYear);
-		Actor actor(aid,actorName,actorBirthYear);
-		//actor.displayInfo();
-		actorHashTable->add(actorBirthYear, actor);
+		Actor* newActor = new Actor(aid,actorName,actorBirthYear);
+		actorHashTable->add(actorBirthYear, newActor);
 		// find the actor 
 		AVLNode<Actor>* actorNode = actorHashTable->search(aid);
-		Actor* actorPtr = &(actorNode->item);
+		Actor* actorPtr = actorNode->item;
 		actorGraph->addActor(actorPtr);
+		//actor.displayInfo();
 
 	}
 
 	actorStream.close();
-	actorGraph->displayAllActors();
-	actorGraph->searchIndex(641);
-	int index;
-	index = actorGraph->searchIndex(641);
-	cout << "This is actor's 641: " << index << endl;
 	// Insert the relationship between the actors and the movies 
 	addRelationship(actorHashTable, movieHashTable);
 
-	// Insert known actors into the graph 
-	addKnownActorsFromCast(actorGraph, movieHashTable);
-
-	actorGraph->printAdjacencyList();
+	//actorGraph->printAdjacencyList();
 	cout << "Welcome to the movie database" << endl;
 	while (true) {
 		displaySelectUser();
@@ -195,12 +165,8 @@ void addRelationship(HashTable<Actor>* actors, HashTable<Movie>* movies) {
 			// add movie to actor 
 			AVLNode<Movie>* movieNode = movies->search(movieId);
 			AVLNode<Actor>* actorNode = actors->search(actorId);
-			movieNode->item.displayInfo();
-			actorNode->item.displayInfo();
-			cout << endl;
-			Movie* moviePtr = &(movieNode->item);
-			moviePtr->displayInfo();
-			Actor*  actorPtr = &(actorNode->item);
+			Movie* moviePtr = movieNode->item;
+			Actor* actorPtr = actorNode->item;
 
 			// push_back the movie to the actor
 			movieNode->relatedPointers.pushBack(actorPtr);
@@ -231,7 +197,6 @@ void addKnownActorsFromCast(ActorGraph* actors, HashTable<Movie>* movieHash) {
 		// loop through
 		for (int i = 0; i < movieNodeList.getLength(); i++) {
 			AVLNode<Movie>* m = movieNodeList[i];
-			cout << "This is the movieTitle: " << m->item.getName() << endl;
 			Vector<Actor*> actorCast = m->relatedPointers;
 			for (int j = 0; j < actorCast.getLength(); j++) {
 				Actor* currentActor = actorCast[j];
@@ -302,15 +267,19 @@ void handleUserFunctions(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 			getline(ss, oldAge);
 
 			int youngestAge = stoi(yAge);
+			time_t t = time(0);
+			struct tm now;
+			localtime_s(&now, &t); // Safely populate now with the current time
+			int currentYear = now.tm_year + 1900;  // Get the current year
 			int oldestAge = stoi(oldAge);
-
-			int olderBirthYear = 2025 - oldestAge;
-			int youngerBirthYear = 2025 - youngestAge;
+			int olderBirthYear = currentYear - oldestAge;
+			int youngerBirthYear = currentYear - youngestAge;
 			cout << left << setw(10) << "Actor Id"
 				<< left << setw(25) << "Actor Name"
-				<< left << setw(10) << "Actor Birth Year"
+				<< left << setw(25) << "Actor Birth Year"
+				<< left << setw(25) << "Actor's age"
 				<< endl;
-			for (int i = olderBirthYear; i <= youngerBirthYear; i++) {
+			for (int i = youngerBirthYear; i > olderBirthYear; i--) {
 				// call the getKey function 
 				AVLTree<Actor>* avlTreePtr = actorhash->getKey(i);
 				// print the items 
@@ -373,9 +342,10 @@ void handleUserFunctions(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 				sortActors(cast,0,cast.getLength()-1);
 				if (cast.getLength() > 0) {
 					cout << left << setw(10) << "Actor Id"
-						 << left << setw(25) << "Actor Name"
-						 << left << setw(10) << "Actor Birth Year"
-						 << endl;
+						<< left << setw(25) << "Actor Name"
+						<< left << setw(25) << "Actor Birth Year"
+						<< left << setw(25) << "Actor's age"
+						<< endl;
 					for (int i = 0; i < cast.getLength(); i++) {
 						Actor* a = cast[i];
 						a->displayInfo();
@@ -385,6 +355,8 @@ void handleUserFunctions(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 			}
 		}
 		else if (option == 5) {
+			// Insert known actors into the graph 
+			addKnownActorsFromCast(actorgraph, movieHash);
 			cout << "Enter the actor's name: " << endl;
 			string name;
 			cin.ignore();
@@ -437,7 +409,7 @@ int partitionActors(Vector<Actor*> actors, int left, int right) {
 	Actor* pivot = actors[(left + right) / 2];
 	while (left <= right) {
 		while (actors[left]->getName() < pivot->getName()) {
-			cout << "Sorting" << actors[left]->getName() <<  " and " << pivot->getName() << endl;
+			//cout << "Sorting" << actors[left]->getName() <<  " and " << pivot->getName() << endl;
 			left++; // increase the left index 
 		}
 		while (actors[right]->getName() > pivot->getName()) {
@@ -484,9 +456,9 @@ void updateActorsCSV(HashTable<Actor>* actorhash) {
 		if (actorTree && actorTree->getRoot() != nullptr) {
 			AVLNode<Actor>* current = actorTree->getRoot();
 			while (current) {
-				actorFile << current->item.getKey() << ","
-					<< current->item.getName() << ","
-					<< current->item.getActorBirthYear() << "\n";
+				actorFile << current->item->getKey() << ","
+					<< current->item->getName() << ","
+					<< current->item->getActorBirthYear() << "\n";
 				current = current->right;
 			}
 		}
@@ -511,9 +483,9 @@ void updateMoviesCSV(HashTable<Movie>* movieHash) {
 		if (movieTree && movieTree->getRoot() != nullptr) {
 			AVLNode<Movie>* current = movieTree->getRoot();
 			while (current) {
-				movieFile << current->item.getKey() << ","
-					<< current->item.getName() << ","
-					<< current->item.getReleasedYear() << "\n";
+				movieFile << current->item->getKey() << ","
+					<< current->item->getName() << ","
+					<< current->item->getReleasedYear() << "\n";
 				current = current->right;
 			}
 		}
@@ -535,7 +507,7 @@ void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 			cout << "Add new actor" << endl;
 			int actorId, birthYear;
 			string actorName;
-
+			cin.ignore();
 			cout << "Enter Actor ID: ";
 			cin >> actorId;
 			cin.ignore();
@@ -544,7 +516,7 @@ void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 			cout << "Enter Birth Year: ";
 			cin >> birthYear;
 
-			Actor newActor(actorId, actorName, birthYear);
+			Actor* newActor = new Actor(actorId, actorName, birthYear);
 			actorhash->add(birthYear, newActor);
 			//updateActorsCSV(actorhash);
 
@@ -567,7 +539,7 @@ void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 			cout << "Enter Release Year: ";
 			cin >> releasedYear;
 
-			Movie newMovie(movieId, movieTitle, moviePlot, releasedYear);
+			Movie* newMovie = new Movie(movieId, movieTitle, moviePlot, releasedYear);
 			movieHash->add(releasedYear, newMovie);
 			//updateMoviesCSV(movieHash);
 
@@ -587,8 +559,8 @@ void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 			AVLNode<Actor>* actorNode = actorhash->search(actorId);
 
 			if (movieNode && actorNode) {
-				Movie* moviePtr = &(movieNode->item);
-				Actor* actorPtr = &(actorNode->item);
+				Movie* moviePtr = movieNode->item;
+				Actor* actorPtr = actorNode->item;
 
 				movieNode->relatedPointers.pushBack(actorPtr);
 				actorNode->relatedPointers.pushBack(moviePtr);
@@ -609,14 +581,14 @@ void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 
 			if (choice == 1) {
 				int actorId;
-				cout << "Enter Actor ID: ";
+				cout << "Enter Actor ID: ";				
 				cin >> actorId;
-
 				AVLNode<Actor>* actorNode = actorhash->search(actorId);
+				Vector<Movie*> actedMovies = actorNode->relatedPointers;
+				actorNode->item->displayInfo();
 				if (actorNode) {
-					Actor temp = actorNode->item;
-
-					cout << "Enter New Name: ";
+					Actor* temp = actorNode->item;
+					cout << "Enter New Name: "; 
 					cin.ignore();
 					string newName;
 					getline(cin, newName);
@@ -624,11 +596,15 @@ void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 					int newBirthYear;
 					cin >> newBirthYear;
 
-					actorhash->remove(temp.getKey());
-					temp.setActorName(newName);
-					temp.setActorBirthYear(newBirthYear);
+					actorhash->remove(actorNode->item->getActorBirthYear(),actorNode->key);
+					temp->setActorName(newName);
+					temp->setActorBirthYear(newBirthYear);
 					actorhash->add(newBirthYear, temp);
-					//updateActorsCSV(actorhash);
+					// get the new actor 
+					actorNode = actorhash->search(actorId);
+					for (int i = 0; i < actedMovies.getLength(); i++) {
+						actorNode->relatedPointers.pushBack(actedMovies[i]);
+					}
 				}
 				else {
 					cout << "Actor not found!" << endl;
@@ -641,8 +617,8 @@ void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 
 				AVLNode<Movie>* movieNode = movieHash->search(movieId);
 				if (movieNode) {
-					Movie temp = movieNode->item;
-
+					Vector<Actor*> cast = movieNode->relatedPointers;
+					Movie* temp = movieNode->item;
 					cout << "Enter New Title: ";
 					cin.ignore();
 					string newTitle;
@@ -651,11 +627,12 @@ void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 					int newYear;
 					cin >> newYear;
 
-					movieHash->remove(temp.getKey());
-					temp.setMovieTitle(newTitle);
-					temp.setReleasedYear(newYear);
+					movieHash->remove(temp->getKey(),movieNode->key);
+					temp->setMovieTitle(newTitle);
+					temp->setReleasedYear(newYear);
 					movieHash->add(newYear, temp);
-					//updateMoviesCSV(movieHash);
+					// get the new movie
+					movieNode = movieHash->search(movieId);
 				}
 				else {
 					cout << "Movie not found!" << endl;

@@ -44,7 +44,7 @@ int HashTable<T>::hash(hashKey key) {
 }
 
 template <class T>
-bool HashTable<T>::add(hashKey newKey, T item) {
+bool HashTable<T>::add(hashKey newKey, T* item) {
 	// hash the key first 
 	int index = hash(newKey); // year of released or date of year for the actor 
 	// call the insert method pass in the item;
@@ -79,7 +79,6 @@ template <class T>
 
 AVLNode<T>* HashTable<T>::search(int id) {
 	try {
-		std::cout << "Searching for ID: " << id << std::endl;
 
 		// Check if ID is valid (optional check, depending on your use case)
 		if (id < 0) {
@@ -128,7 +127,6 @@ template <class T>
 // return the item of the actor (movie or actor) 
 AVLNode<T>* HashTable<T>::searchByName(string name) {
 	try {
-		cout << "Searching for actor's name: " << name << endl;
 		for (int i = 0; i < MAX_SIZE; i++) {
 			// call search for name method
 			AVLTree<T>* avltreePtr = items[i];
@@ -193,15 +191,15 @@ void HashTable<T>::getAll(Vector<AVLNode<T>*> &nodeList){
 }
 
 template <class T>
-bool HashTable<T>::remove(hashKey key) {
+bool HashTable<T>::remove(hashKey key,int id) {
 	int index = hash(key);
 	AVLTree<T>* avlTree = items[index];
 
 	if (avlTree == nullptr) return false;
 
-	AVLNode<T>* node = avlTree->searchAVLById(key);
+	AVLNode<T>* node = avlTree->searchAVLById(id);
 	if (node) {
-		avlTree->remove(key);  // Assuming AVLTree remove() exists
+		avlTree->remove(id);  // Assuming AVLTree remove() exists
 		size--;
 		return true;
 	}

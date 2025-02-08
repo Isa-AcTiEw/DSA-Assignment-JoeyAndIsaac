@@ -11,7 +11,7 @@ template <typename T>
 struct AVLNode
 {
     KeyType key;
-    T item;
+    T* item;
     AVLNode* left;
     AVLNode* right;
     int height = 1; // height of the current node 
@@ -23,7 +23,7 @@ template <>
 struct AVLNode<Actor>
 {
     KeyType key;
-    Actor item;
+    Actor* item;
     AVLNode* left;
     AVLNode* right;
     int height = 1; // height of the current node 
@@ -31,11 +31,11 @@ struct AVLNode<Actor>
     Vector<Movie*> relatedPointers;
 };
 
-template <> 
+template <>
 struct AVLNode<Movie>
 {
     KeyType key;
-    Movie item;
+    Movie* item;
     AVLNode* left;
     AVLNode* right;
     int height = 1; // height of the current node 
@@ -60,15 +60,14 @@ public:
 
     // Function to get the height of a node
     int height(AVLNode<T>* node);
-
     // Methods for performing right-rotate and left-rotate
-    void rotateRight(AVLNode<T>*& node);
-    void rotateLeft(AVLNode<T>*& node);
+    AVLNode<T>* rotateRight(AVLNode<T>* nodeN);
+    AVLNode<T>* rotateLeft(AVLNode<T>* nodeN);
 
     // Other necessary methods (e.g., insert, balance, etc.) could be added here
-    void insert(T item);
-    void insertRecursive(AVLNode<T>*& root,int key,T item);
-    int getBalanceFactor(AVLNode<T>* root); 
+    void insert(T* item);
+    int getBalanceFactor(AVLNode<T>* root);
+    void updateInsert(T* item, Vector<T*>& related);
     void print(AVLNode<T>* root);
     void remove(int key);
     AVLNode<T>* removeNode(AVLNode<T>* root, int key);
@@ -79,7 +78,7 @@ public:
     AVLNode<T>* getRoot();
     void retrieveAll(Vector<AVLNode<T>*>& nodeList);
     void retrieveAll(AVLNode<T>* temp, Vector<AVLNode<T>*>& nodeList);
-
+    bool isBalanced(AVLNode<T>* root);
+    AVLNode<T>* insertRecursive(AVLNode<T>* node, int key, T* item, AVLNode<T>* newNode);
     void print();
 };
-

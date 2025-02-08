@@ -22,7 +22,6 @@ public:
 	void addActor(Actor*);
 	void addRelation(int sourceActorId, int destActorId);
 	void displayAllRelatedActors(int sourceActorId);
-	void displayAllActors();
 	void printAdjacencyList();
 	int getActorByName(string name);
 

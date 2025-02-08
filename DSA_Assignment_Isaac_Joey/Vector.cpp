@@ -34,7 +34,7 @@ template <class T>
 // Postcondition: Returns an immutable reference of the item stored in the array 
 // Time Complexity: O(1) since vector data structures allow for indexed retrieval it does not traverse the entire array
 T& Vector<T>::operator[](int index) const{
-	if (index <= capacity) {
+	if (index >= 0 && index < size) {
 		return dynamicArray[index];
 	}
 	else {
@@ -43,8 +43,7 @@ T& Vector<T>::operator[](int index) const{
 }
 
 template <class T>
-
-T& Vector<T>::operator[](int index){
+T& Vector<T>::operator[](int index) {
 	if (index <= capacity) {
 		return dynamicArray[index];
 	}
@@ -52,6 +51,7 @@ T& Vector<T>::operator[](int index){
 		cout << "Index is out of range" << endl;
 	}
 }
+
 
 // Precondition: none 
 // Postcondition: The size of the array increases and if the element inserted to the array exceeds the maximum capacity, the capacity
@@ -60,7 +60,7 @@ T& Vector<T>::operator[](int index){
 // Average Case: O(1) time - complexity: i increase the index of size (insertion at rear) no shifting of elements necessary
 template<class T>
 bool Vector<T>::pushBack(T item) {
-	if (size == capacity) {
+	if (size >= capacity) {
 		// call resize function (to allocate new memory for new aray items)
 		resize(capacity * 2); // increase the capacity exponentially each time i exceed or run out of memory 
 	}
@@ -69,27 +69,46 @@ bool Vector<T>::pushBack(T item) {
 	return true;
 }
 
+template <class T>
+bool Vector<T>::pushBack(T* item) {
+	// Check if the current size exceeds the capacity
+	if (size >= capacity) {
+		// Call resize function to allocate new memory with double the current capacity
+		resize(capacity * 2); // Increase capacity exponentially
+	}
+
+	// Insert the item at the current size (end of the array)
+	dynamicArray[size] = *item;
+
+	// Increment the size after adding the new element
+	size++;
+
+	return true;
+}
+
+
 // Precondition: size must be equivalent to capacity (no more memory to allocate new elements in the array)
 // Postcondition: capacity increases exponentially, the pointer to the original array is deleted, memory allocated to temp is freed 
 // Time complexity: O(n) , dependant on the size of the current array 
 template <class T>
 void Vector<T>::resize(int newCapacity) {
-	// copy the elements from the old array 
-	// assign new allocated memory to the new array 
-	// delete the temp array 
-	// dynamicArray = newArray
-	T* temp = dynamicArray;
-	
-	// allocate new memory 
-	dynamicArray = new T[newCapacity];
-
-	// copy 
-	for (int i = 0; i < size; i++) {
-		dynamicArray[i] = temp[i];
+	// Allocate new memory first
+	T* newArray = new T[newCapacity];
+	// Copy existing elements to the new array
+	for (size_t i = 0; i < size; i++) {
+		newArray[i] = dynamicArray[i];
 	}
-	// free the memory at temp (pointing to old memory referenced by dynamicArray)
-	delete[] temp;
+
+	// Delete old memory
+	delete[] dynamicArray;
+
+	// Reassign dynamicArray to the new array
+	dynamicArray = newArray;
+
+	// Update the capacity
+	capacity = newCapacity;
 }
+
 
 // Function to print all elements in the array
 
@@ -98,3 +117,4 @@ template <class T>
 int Vector<T>::getLength() {
 	return size;
 }
+

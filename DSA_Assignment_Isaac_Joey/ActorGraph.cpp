@@ -7,29 +7,19 @@
 ActorGraph::ActorGraph() {}
 
 void ActorGraph::addActor(Actor* actor) {
-	actor->displayInfo();
+	//actor->displayInfo();
 	actorList.pushBack(actor);
 	// create an empty vector of int (actor indices for related actors)
 	adjacencyList.pushBack(Vector<int>());
 }
 
 
-void ActorGraph::displayAllActors() {
-	for (int i = 0; i < actorList.getLength(); i++) {
-		Actor a = *(actorList[i]);
-		cout << i  << endl;
-		a.displayInfo();
-	}
-}
-
 
 // retrieve the index of the actor based on it's name 
 int ActorGraph::searchIndex(int actorId) {
-	cout << actorId << endl;
 	for (int i = 0; i < actorList.getLength(); i++) {
 		Actor a = *(actorList[i]);
 		if (actorId == a.getKey()) {
-			cout << a.getKey() << endl;
 			return i;
 		}
 	}
@@ -48,8 +38,8 @@ void ActorGraph::addRelation(int sourceActorId, int destinationActorId) {
 	}
 
 	// Print the indices for debugging
-	cout << sourceInd << endl;
-	cout << destInd << endl;
+	//cout << sourceInd << endl;
+	//cout << destInd << endl;
 
 	// Prevent adding duplicate relationships by checking if the connection already exists
 	Vector<int>& sourceAdjList = adjacencyList[sourceInd];
@@ -101,8 +91,6 @@ void ActorGraph::displayAllRelatedActors(int sourceActorId) {
 	lvl[sourceActorId] = 0;
 	neighbours->enqueue(sourceActorId);
 
-	cout << "Source Actor Id: " << sourceActorId << endl;
-
 	while (!neighbours->isEmpty()) {
 		// dequeue the current node 
 		int curr;
@@ -151,23 +139,20 @@ void ActorGraph::printAdjacencyList() {
 		Actor* actor = actorList[i];
 
 		// Print the actor's name and key (or other relevant info)
-		std::cout << "Actor " << actor->getName() << " (" << actor->getKey() << "): ";
+		//std::cout << "Actor " << actor->getName() << " (" << actor->getKey() << "): ";
 
 		// Get the corresponding adjacency list for this actor
 		Vector<int> adjList = adjacencyList[i];
 
 		// If the actor has no connections, print "No connections"
 		if (adjList.getLength() == 0) {
-			std::cout << "No connections" << std::endl;
 		}
 		else {
 			// Otherwise, print the indices of the connected actors
 			for (int j = 0; j < adjList.getLength(); ++j) {
 				// Print the index of the connected actor
 				int connectedActorIndex = adjList[j];
-				std::cout << connectedActorIndex << " ";  // Print index instead of actor name
 			}
-			std::cout << std::endl;
 		}
 	}
 }
