@@ -27,32 +27,39 @@ HashTable<T>::HashTable() {
 
 template <class T>
 int HashTable<T>::hash(hashKey key) {
-	int sum = 0;
-	int base = 31;
-	string strKey = to_string(key);
-	int len = strKey.length();
-	for (int i = 0; i < len; i++) {
-		int digit = strKey[i] - '0';
-		if (digit != NULL) {
-			sum += digit * pow(base, len - i);
-		}
-	}
-	if (sum != 0) {
-		int hash = sum % 101;
-		return hash;
-	}
+	int hash = key % 101;
+	return hash;
 }
 
 template <class T>
 bool HashTable<T>::add(hashKey newKey, T* item) {
-	// hash the key first 
-	int index = hash(newKey); // year of released or date of year for the actor 
-	// call the insert method pass in the item;
-	AVLTree<T>* avlTree = items[index];
-	avlTree->insert(item);
+	if (newKey < 1925) {
+		return false;
+	}
+
+	// Hash the key first 
+	int index = hash(newKey);
+	int originalIndex = index;
+
+	// Handle collisions using linear probing
+	while (items[index] != nullptr &&
+		items[index]->getRoot() != nullptr &&
+		items[index]->getRoot()->item->getYear() != newKey) {
+		cout << "There is collision: " << endl;
+
+		index = (index + 1) % 101; // Linear probe to next slot
+
+		// Check if we've wrapped around the table
+		if (index == originalIndex) {
+			return false; // Table is full
+		}
+	}
+	// Insert item into the AVL tree at this index
+	items[index]->insert(item);
 	size++;
 	return true;
 }
+
 
 template <class T>
 bool HashTable<T>::isEmpty() {
@@ -112,7 +119,7 @@ AVLNode<T>* HashTable<T>::search(int id) {
 	}
 	catch (const std::runtime_error& e) {
 		// Catch runtime error exception (e.g., ID not found)
-		std::cerr << "Runtime error: " << e.what() << std::endl;
+		
 	}
 	catch (const std::exception& e) {
 		// Catch any other standard exception

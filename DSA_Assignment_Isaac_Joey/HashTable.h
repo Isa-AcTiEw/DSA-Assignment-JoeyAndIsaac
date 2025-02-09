@@ -11,7 +11,7 @@ template <class T>
 class HashTable
 {
 private:
-    static const int MAX_SIZE = 113;  // Maximum size of the hash table
+    static const int MAX_SIZE = 101;  // Maximum size of the hash table
     AVLTree<T>* items[MAX_SIZE];      // Array of pointers to AVLTree objects
     int size;                         // Number of elements in the table
 

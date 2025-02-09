@@ -25,7 +25,7 @@ void Actor::setActorBirthYear(int bYear) {
 	birthYear = bYear;
 };
 
-int Actor::getActorBirthYear() {
+int Actor::getYear() {
 	return birthYear;
 }
 void Actor::displayInfo() {

@@ -12,9 +12,9 @@ class Actor
 		Actor(int aId, string aName, int bYear);
 		// getters and setters for the classes 
 		int getKey();
+		int getYear();
 		string getName();
 		void setActorName(string aName);
-		int getActorBirthYear();
 		void setActorBirthYear(int bYear);
 		void displayInfo();
 		int calculateAge();

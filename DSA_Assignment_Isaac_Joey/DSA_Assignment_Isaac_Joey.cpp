@@ -19,7 +19,7 @@ void addRelationship(HashTable<Actor>* actors, HashTable<Movie>* movies);
 void handleUserFunctions(HashTable<Actor>* actorhash, HashTable<Movie>* movieHash, ActorGraph* actorgraph);
 void updateActorsCSV(HashTable<Actor>* actorhash);
 void updateMoviesCSV(HashTable<Movie>* movieHash);
-void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHash);
+void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHash, ActorGraph* actorgraph);
 void addKnownActorsFromCast(ActorGraph* actors, HashTable<Movie>* movieHash); 
 int partition(Vector<Movie*> movies, int left, int right);
 void sortMovies(Vector<Movie*> movies, int left, int right);
@@ -34,7 +34,7 @@ Vector<string> splitCSVLine(const string& line) {
 	// splits the whole csv line at the comma 
 	while (getline(ss, field, ',')) {
 		// Check if the field contains is quoted "\"Hang-ro(course): Jeju, Joseon, Osaka"\" or \" Hello "\
-
+		// this is to check if the string is quoted but is a subpart of the whole quote
 		if (!field.empty() && field.front() == '"' && field.back() != '"') {
 			inQuotes = true;
 			result.pushBack(field);  // Using custom Vector's pushBack method
@@ -90,11 +90,9 @@ int main() {
             // Convert to integers
             int movieId = stoi(movId);
             int movRYear = stoi(movYear);
-			if (movRYear >= 1924) {
-				// Create Movie object and add it to hash table
-				Movie* newMovie = new Movie(movieId, movTitle, movPlot, movRYear);
-				movieHashTable->add(movRYear, newMovie);
-			}
+			// Create Movie object and add it to hash table
+			Movie* newMovie = new Movie(movieId, movTitle, movPlot, movRYear);
+			movieHashTable->add(movRYear, newMovie);
         }
     }
 
@@ -117,8 +115,12 @@ int main() {
 		actorHashTable->add(actorBirthYear, newActor);
 		// find the actor 
 		AVLNode<Actor>* actorNode = actorHashTable->search(aid);
-		Actor* actorPtr = actorNode->item;
-		actorGraph->addActor(actorPtr);
+		if (actorNode != nullptr) {
+			Actor* actorPtr = actorNode->item;
+			actorGraph->addActor(actorPtr);
+		}
+
+
 		//actor.displayInfo();
 
 	}
@@ -138,7 +140,7 @@ int main() {
 			handleUserFunctions(actorHashTable,movieHashTable,actorGraph);
 		}
 		else if (useOption == 2) {
-			handleAdminFunction(actorHashTable, movieHashTable);
+			handleAdminFunction(actorHashTable,movieHashTable,actorGraph);
 		}
 		else {
 			break;
@@ -165,12 +167,17 @@ void addRelationship(HashTable<Actor>* actors, HashTable<Movie>* movies) {
 			// add movie to actor 
 			AVLNode<Movie>* movieNode = movies->search(movieId);
 			AVLNode<Actor>* actorNode = actors->search(actorId);
-			Movie* moviePtr = movieNode->item;
-			Actor* actorPtr = actorNode->item;
+			if (movieNode != nullptr && actorNode != nullptr) {
+				Movie* moviePtr = movieNode->item;
+				Actor* actorPtr = actorNode->item;
 
-			// push_back the movie to the actor
-			movieNode->relatedPointers.pushBack(actorPtr);
-			actorNode->relatedPointers.pushBack(moviePtr);
+				// push_back the movie to the actor
+				movieNode->relatedPointers.pushBack(actorPtr);
+				actorNode->relatedPointers.pushBack(moviePtr);
+			}
+			else {
+				cout << "Null" << endl;
+			}
 		}
 		castStream.close();
 
@@ -287,18 +294,22 @@ void handleUserFunctions(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 					avlTreePtr->print();
 				}
 			}
+
 		}
 		else if (option == 2) {
-
-			time_t t = time(0);  // Get current time
-			struct tm now;       // Create a tm structure
-			localtime_s(&now, &t); // Use localtime_s (safe version)
-
-			int currentYear = now.tm_year + 1900;  // Get the current year 
-			int lowYear = currentYear - 3;
-			for (int i = lowYear; i <= currentYear; i++) {
-				cout << i << endl;
+			cout << "Enter a year: ";
+			int yearEntered;
+			cin >> yearEntered;
+			int lowYear = yearEntered - 3;
+			cout << left << setw(10) << "MovieId"
+				<< left << setw(100) << "MovieTitle"
+				<< left << setw(40) << "MoviePlot"
+				<< left << setw(10) << "Released Year"
+				<< endl;
+			for (int i = lowYear; i <= yearEntered; i++) {
 				AVLTree<Movie>* avlMoviePtr = movieHash->getKey(i);
+				avlMoviePtr->print();
+				cout << endl;
 			}
 
 		}
@@ -458,7 +469,7 @@ void updateActorsCSV(HashTable<Actor>* actorhash) {
 			while (current) {
 				actorFile << current->item->getKey() << ","
 					<< current->item->getName() << ","
-					<< current->item->getActorBirthYear() << "\n";
+					<< current->item->getYear() << "\n";
 				current = current->right;
 			}
 		}
@@ -485,7 +496,7 @@ void updateMoviesCSV(HashTable<Movie>* movieHash) {
 			while (current) {
 				movieFile << current->item->getKey() << ","
 					<< current->item->getName() << ","
-					<< current->item->getReleasedYear() << "\n";
+					<< current->item->getYear() << "\n";
 				current = current->right;
 			}
 		}
@@ -495,7 +506,7 @@ void updateMoviesCSV(HashTable<Movie>* movieHash) {
 }
 
 // Administrator features
-void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHash) {
+void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHash, ActorGraph* actorGraph) {
 	while (true) {
 		displayAdminMenu();
 		int option;
@@ -518,6 +529,7 @@ void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 
 			Actor* newActor = new Actor(actorId, actorName, birthYear);
 			actorhash->add(birthYear, newActor);
+			actorGraph->addActor(newActor);
 			//updateActorsCSV(actorhash);
 
 			cout << "New actor added successfully!" << endl;
@@ -596,7 +608,7 @@ void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 					int newBirthYear;
 					cin >> newBirthYear;
 
-					actorhash->remove(actorNode->item->getActorBirthYear(),actorNode->key);
+					actorhash->remove(actorNode->item->getYear(),actorNode->key);
 					temp->setActorName(newName);
 					temp->setActorBirthYear(newBirthYear);
 					actorhash->add(newBirthYear, temp);

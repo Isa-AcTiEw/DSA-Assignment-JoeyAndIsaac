@@ -30,7 +30,7 @@ string Movie::getMoviePlot() {
 	return moviePlot;
 }
 
-int Movie::getReleasedYear() {
+int Movie::getYear() {
 	return releasedYear;
 }
 
@@ -41,7 +41,8 @@ int Movie::getKey() {
 
 void Movie::displayInfo() {
 	cout << left << setw(10) << movieId
-		<< left << setw(25) << movieTitle
+		<< left << setw(100) << movieTitle
+		<< left << setw(40) << moviePlot
 		<< left << setw(10) << releasedYear
 		<< endl;
 }

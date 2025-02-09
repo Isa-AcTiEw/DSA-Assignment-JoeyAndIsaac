@@ -67,7 +67,6 @@ public:
     // Other necessary methods (e.g., insert, balance, etc.) could be added here
     void insert(T* item);
     int getBalanceFactor(AVLNode<T>* root);
-    void updateInsert(T* item, Vector<T*>& related);
     void print(AVLNode<T>* root);
     void remove(int key);
     AVLNode<T>* removeNode(AVLNode<T>* root, int key);
