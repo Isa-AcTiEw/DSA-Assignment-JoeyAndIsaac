@@ -1,3 +1,4 @@
+// Team Member 1: Isaac Tiew Xun Yong (S10257760G)
 #include "Actor.h"
 #include <iomanip>  
 #include <ctime>

@@ -1,4 +1,5 @@
 // Queue.h - Specification of Queue ADT (Pointer-based)
+// Team Member 1: Isaac Tiew Xun Yong (S10257760G)
 #pragma once
 #include<string>
 #include<iostream>

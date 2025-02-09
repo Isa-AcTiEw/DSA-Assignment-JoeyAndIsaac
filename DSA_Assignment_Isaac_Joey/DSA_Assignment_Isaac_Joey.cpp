@@ -179,9 +179,6 @@ void addRelationship(HashTable<Actor>* actors, HashTable<Movie>* movies) {
 				movieNode->relatedPointers.pushBack(actorPtr);
 				actorNode->relatedPointers.pushBack(moviePtr);
 			}
-			else {
-				cout << "Null" << endl;
-			}
 		}
 		castStream.close();
 
@@ -336,9 +333,10 @@ void handleUserFunctions(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 
 				// display in sorted order 
 				if (movies.getLength() > 0) {
-					cout << left << setw(10) << "Movie Id"
-						<< left << setw(25) << "Movie Title"
-						<< left << setw(10) << "Year Released"
+					cout << left << setw(10) << "MovieId"
+						<< left << setw(100) << "MovieTitle"
+						<< left << setw(40) << "MoviePlot"
+						<< left << setw(10) << "Released Year"
 						<< endl;
 					for (int i = 0; i < movies.getLength(); i++) {
 						movies[i]->displayInfo();
@@ -385,6 +383,11 @@ void handleUserFunctions(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 			cin.ignore();
 			getline(cin, name);
 			int actorInd = actorgraph->getActorByName(name);
+			cout << left << setw(10) << "Actor Id"
+				<< left << setw(25) << "Actor Name"
+				<< left << setw(25) << "Actor Birth Year"
+				<< left << setw(25) << "Actor's age"
+				<< endl;
 			actorgraph->displayAllRelatedActors(actorInd);
 
 		}

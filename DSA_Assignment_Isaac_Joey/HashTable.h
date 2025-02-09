@@ -1,3 +1,4 @@
+// Team Member 1: Isaac Tiew Xun Yong (S10257760G)
 #pragma once
 // Hash table class definition with separate chaining
 #include <iostream>
@@ -34,6 +35,12 @@ public:
     int getLength();
 
     // Search the enitre hashTable based on actor's id or movie's id 
+    /*
+    * Precondition: The given movie id or actor's id must exist within the avl tree stored in each hash table 
+    * PostCondition: The avl node of the given actor or movie object is being returned 
+    * Time complexity: O(m log n) where m is the size of the entire hash table and log n is the height of the avl tree, this is because the algorithm
+    * traverses each hash bucket and calls the searchById function on each pointer to the avl tree 
+    */
     AVLNode<T>* search(int id);
 
     // get the corresponding AVLTree Node of the user to search the entire tree 

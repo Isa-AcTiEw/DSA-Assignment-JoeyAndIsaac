@@ -1,3 +1,5 @@
+
+// Team Member 1: Isaac Tiew Xun Yong (S10257760G)
 #include "AVLTree.h"
 #include "Actor.h"
 #include "Movie.h"
@@ -27,22 +29,6 @@ void AVLTree<T>::insert(T *item) {
     }
 }
 
-//template <class T>
-//void AVLTree<T>::updateInsert(T* item, Vector<T*>& related) {
-//    int key = item->getKey();
-//    AVLNode<T>* avlNode = new AVLNode<T>();  // Correctly allocate memory for avlNode
-//    avlNode->key = key;
-//    avlNode->item = item;
-//    for (int i = 0; i < related.getLength(); i++) {
-//        avlNode->relatedPointers.pushBack(related[i]);
-//    }
-//    if (root == nullptr) {
-//        root = avlNode;
-//    }
-//    else {
-//        root = insertRecursive(root, key, item, avlNode);
-//    }
-//}
 template <class T>
 // insertion for AVL Tree 
 AVLNode<T>* AVLTree<T>::insertRecursive(AVLNode<T>* node, int key, T* item, AVLNode<T>* newNode) {

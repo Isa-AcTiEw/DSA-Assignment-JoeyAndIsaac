@@ -1,3 +1,4 @@
+// Team Member 1: Isaac Tiew Xun Yong (S10257760G)
 #include "Vector.h"
 #include "Actor.h"
 #include "Movie.h"
