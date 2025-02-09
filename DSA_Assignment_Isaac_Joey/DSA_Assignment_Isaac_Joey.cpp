@@ -1,4 +1,7 @@
 // DSA_Assignment_Isaac_Joey.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// Team Member 1: Isaac Tiew Xun Yong (S10257760G)
+// Team Member 2: Joey Tan Ying Xian (S10262534D) 
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -11,6 +14,7 @@
 #include <iomanip> 
 #include "AVLTree.h"
 #include <ctime>
+
 using namespace std;
 void displayUserMenu();
 void displayAdminMenu();
@@ -25,6 +29,7 @@ int partition(Vector<Movie*> movies, int left, int right);
 void sortMovies(Vector<Movie*> movies, int left, int right);
 int partitionActors(Vector<Actor*> actors, int left, int right);
 void sortActors(Vector<Actor*> actors, int left, int right);
+
 Vector<string> splitCSVLine(const string& line) {
 	Vector<string> result;
 	stringstream ss(line);
@@ -53,7 +58,6 @@ Vector<string> splitCSVLine(const string& line) {
 			result.pushBack(field);  // the field does not contain quotes (add to result vector)
 		}
 	}
-
 	return result;
 }
 
@@ -78,14 +82,14 @@ int main() {
 	getline(actorStream, line);
 	// Read data lines
 	while (getline(movieStream, line)) {
-        // Use the custom split function to correctly split the CSV line
-        Vector<string> columns = splitCSVLine(line);
-        
-        // Make sure to have at least 4 columns
-        if (columns.getLength() >= 4) {
-            string movId = columns[0];
-            string movTitle = columns[1];
-            string movPlot = columns[2];
+		// Use the custom split function to correctly split the CSV line
+		Vector<string> columns = splitCSVLine(line);
+
+		// Make sure to have at least 4 columns
+		if (columns.getLength() >= 4) {
+			string movId = columns[0];
+			string movTitle = columns[1];
+			string movPlot = columns[2];
 			string movYear = columns[3];
             // Convert to integers
             int movieId = stoi(movId);
@@ -111,7 +115,7 @@ int main() {
 
 		int aid = stoi(actorId);
 		int actorBirthYear = stoi(actorBYear);
-		Actor* newActor = new Actor(aid,actorName,actorBirthYear);
+		Actor* newActor = new Actor(aid, actorName, actorBirthYear);
 		actorHashTable->add(actorBirthYear, newActor);
 		// find the actor 
 		AVLNode<Actor>* actorNode = actorHashTable->search(aid);
@@ -137,7 +141,7 @@ int main() {
 		int useOption;
 		cin >> useOption;
 		if (useOption == 1) {
-			handleUserFunctions(actorHashTable,movieHashTable,actorGraph);
+			handleUserFunctions(actorHashTable, movieHashTable, actorGraph);
 		}
 		else if (useOption == 2) {
 			handleAdminFunction(actorHashTable,movieHashTable,actorGraph);
@@ -260,6 +264,7 @@ void handleUserFunctions(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 		cout << "Enter the option to choose" << endl;
 		cin >> option;
 
+		// Display actors who are in the age range
 		if (option == 1) {
 			cout << "Enter the age range of the actor in the following format (youngestAge - oldestage): ";
 			string range;
@@ -296,6 +301,8 @@ void handleUserFunctions(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 			}
 
 		}
+
+		// Diplay movie in the past 3 years
 		else if (option == 2) {
 			cout << "Enter a year: ";
 			int yearEntered;
@@ -314,24 +321,25 @@ void handleUserFunctions(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 
 		}
 
+		// Display all movies an actors starred in
 		else if (option == 3) {
 			// retrieve all actors first 
 			cout << "Enter the actor name: ";
 			string actorName;
 			cin.ignore();
 			getline(cin, actorName);
-			AVLNode<Actor>* actorAVL = actorhash->searchByName(actorName); 
+			AVLNode<Actor>* actorAVL = actorhash->searchByName(actorName);
 			if (actorAVL != nullptr) {
 				Vector<Movie*> movies;
 				movies = actorAVL->relatedPointers;
-				sortMovies(movies,0,movies.getLength()-1);
+				sortMovies(movies, 0, movies.getLength() - 1);
 
 				// display in sorted order 
 				if (movies.getLength() > 0) {
 					cout << left << setw(10) << "Movie Id"
-						 << left << setw(25) << "Movie Title"
-						 << left << setw(10) << "Year Released"
-						 << endl;
+						<< left << setw(25) << "Movie Title"
+						<< left << setw(10) << "Year Released"
+						<< endl;
 					for (int i = 0; i < movies.getLength(); i++) {
 						movies[i]->displayInfo();
 					}
@@ -339,18 +347,19 @@ void handleUserFunctions(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 			}
 		}
 
+		// Display all the actors in a particular movie
 		else if (option == 4) {
 			// retrieve all movies first 
 			cout << "Enter the name of the specific movie: ";
 			string movieName;
 			cin.ignore();
-			getline(cin,movieName);
+			getline(cin, movieName);
 			cout << movieName << endl;
 			AVLNode<Movie>* movieAVL = movieHash->searchByName(movieName);
 			if (movieAVL != nullptr) {
 				Vector<Actor*> cast;
 				cast = movieAVL->relatedPointers;
-				sortActors(cast,0,cast.getLength()-1);
+				sortActors(cast, 0, cast.getLength() - 1);
 				if (cast.getLength() > 0) {
 					cout << left << setw(10) << "Actor Id"
 						<< left << setw(25) << "Actor Name"
@@ -362,21 +371,24 @@ void handleUserFunctions(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 						a->displayInfo();
 					}
 				}
-				
+
 			}
 		}
+
+		// Display a list of all actors that a particular actor know
+		// Additional feature: Using implementation of known actors using graphs
 		else if (option == 5) {
 			// Insert known actors into the graph 
 			addKnownActorsFromCast(actorgraph, movieHash);
 			cout << "Enter the actor's name: " << endl;
 			string name;
 			cin.ignore();
-			getline(cin,name);
+			getline(cin, name);
 			int actorInd = actorgraph->getActorByName(name);
 			actorgraph->displayAllRelatedActors(actorInd);
 
 		}
-		
+
 		else if (option == 0) {
 			break;
 		}
@@ -399,7 +411,7 @@ int partition(Vector<Movie*> movies, int left, int right) {
 			movies[right] = temp;
 		}
 
-		
+
 	}
 	return left; // left is the new pivot
 }
@@ -408,8 +420,8 @@ int partition(Vector<Movie*> movies, int left, int right) {
 void sortMovies(Vector<Movie*> movies, int left, int right) {
 	int q = partition(movies, left, right);
 	if (left < right) {
-		sortMovies(movies, left, q-1); // left
-		sortMovies(movies, q+1,right); // right
+		sortMovies(movies, left, q - 1); // left
+		sortMovies(movies, q + 1, right); // right
 	}
 	else {
 		return;
@@ -444,7 +456,7 @@ void sortActors(Vector<Actor*> actors, int left, int right) {
 	if (left < right) {
 		int q = partitionActors(actors, left, right);
 		sortActors(actors, left, q - 1); // left
-		sortActors(actors, q+1, right); // right
+		sortActors(actors, q + 1, right); // right
 	}
 	else {
 		return;
@@ -591,16 +603,17 @@ void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 			cout << "Update (1) Actor or (2) Movie? ";
 			cin >> choice;
 
+			// When user wants to update actor details
 			if (choice == 1) {
 				int actorId;
-				cout << "Enter Actor ID: ";				
+				cout << "Enter Actor ID: ";
 				cin >> actorId;
 				AVLNode<Actor>* actorNode = actorhash->search(actorId);
 				Vector<Movie*> actedMovies = actorNode->relatedPointers;
 				actorNode->item->displayInfo();
 				if (actorNode) {
 					Actor* temp = actorNode->item;
-					cout << "Enter New Name: "; 
+					cout << "Enter New Name: ";
 					cin.ignore();
 					string newName;
 					getline(cin, newName);
@@ -622,6 +635,8 @@ void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 					cout << "Actor not found!" << endl;
 				}
 			}
+
+			// When user wants to update movies details
 			else if (choice == 2) {
 				int movieId;
 				cout << "Enter Movie ID: ";
@@ -639,7 +654,7 @@ void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 					int newYear;
 					cin >> newYear;
 
-					movieHash->remove(temp->getKey(),movieNode->key);
+					movieHash->remove(temp->getKey(), movieNode->key);
 					temp->setMovieTitle(newTitle);
 					temp->setReleasedYear(newYear);
 					movieHash->add(newYear, temp);
@@ -657,9 +672,7 @@ void handleAdminFunction(HashTable<Actor>* actorhash, HashTable<Movie>* movieHas
 		}
 		else {
 			cout << "Invalid Option" << endl;
-
 		}
-
 	}
 }
 
